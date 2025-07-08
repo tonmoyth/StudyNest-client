@@ -1,0 +1,32 @@
+[
+  {
+    "id": 1,
+    "name": "BoltShift",
+    "logo": "/partnersImages/boltshift.png",
+    "description": "BoltShift empowers industry-focused training programs through real-world integration."
+  },
+  {
+    "id": 2,
+    "name": "FeatherDev",
+    "logo": "/partnersImages/FeatherDev.png",
+    "description": "FeatherDev delivers seamless subscription integration for learning platforms like EduManage."
+  },
+  {
+    "id": 3,
+    "name": "GlobalBank",
+    "logo": "/partnersImages/GlobalBank.png",
+    "description": "GlobalBank ensures secure infrastructure and scalable solutions for online education."
+  },
+  {
+    "id": 4,
+    "name": "Nasdaq",
+    "logo": "/partnersImages/Lightbox.png",
+    "description": "Nasdaq recognizes EduManage as a growing innovator in the global edtech sector."
+  },
+  {
+    "id": 5,
+    "name": "Spherule",
+    "logo": "/partnersImages/Spherule.png",
+    "description": "Spherule supports EduManage with research-backed analytics and education insights."
+  }
+]
