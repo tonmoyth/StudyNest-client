@@ -1,12 +1,17 @@
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
-import { Link, useNavigate } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import useAuth from "../../../Hooks/useAuth";
 import GoogleLogin from "../../../shared/SocialLogin/GoogleLogin";
+import { useMutation } from "@tanstack/react-query";
+import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 
 const Login = () => {
   const { signIn } = useAuth();
   const navigate = useNavigate();
+  const axiosSecure = useAxiosSecure();
+  const {state} = useLocation();
+  const from = state ? state : '/'
 
   const {
     register,
@@ -14,19 +19,37 @@ const Login = () => {
     formState: { errors },
   } = useForm();
 
+  const { mutate: updateLastLogin } = useMutation({
+    mutationFn: async (email) => {
+      const res = await axiosSecure.patch("/users/last-login", { email });
+      return res.data;
+    },
+    onSuccess: () => {
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "Login successful!",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+      navigate(from);
+    },
+    onError: (err) => {
+      Swal.fire({
+        icon: "warning",
+        title: "Login OK but tracking failed",
+        text: err.response?.data?.message || "Last login update failed.",
+      });
+    },
+  });
+
   const onSubmit = (data) => {
     const { email, password } = data;
 
     signIn(email, password)
       .then(() => {
-        Swal.fire({
-          position: "center",
-          icon: "success",
-          title: "Login successful!",
-          showConfirmButton: false,
-          timer: 1500,
-        });
-        navigate('/'); 
+        updateLastLogin(email);
+        navigate("/");
       })
       .catch((error) => {
         Swal.fire({
@@ -81,8 +104,6 @@ const Login = () => {
             {errors.password && (
               <p className="text-red-500 text-xs">{errors.password.message}</p>
             )}
-
-            
           </div>
 
           <button
@@ -108,10 +129,7 @@ const Login = () => {
 
         <p className="text-xs text-center sm:px-6 dark:text-gray-600">
           Don't have an account?
-          <Link
-            to="/register"
-            className="underline dark:text-gray-800 ml-1"
-          >
+          <Link state={from} to="/register" className="underline dark:text-gray-800 ml-1">
             Register
           </Link>
         </p>

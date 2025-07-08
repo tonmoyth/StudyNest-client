@@ -1,22 +1,57 @@
 import React from "react";
 import Swal from "sweetalert2";
 import useAuth from "../../Hooks/useAuth";
-import { useNavigate } from "react-router";
+import { useLocation, useNavigate } from "react-router";
+import { useMutation } from "@tanstack/react-query";
+import useAxiosSecure from "../../Hooks/useAxiosSecure";
 
 const GoogleLogin = () => {
-    const {googleLogin} = useAuth();
-    const navigate = useNavigate();
+  const { googleLogin } = useAuth();
+  const navigate = useNavigate();
+  const axiosSecure = useAxiosSecure();
+  const {state} = useLocation();
+   const from = state ? state : '/'
 
+  const { mutate: saveGoogleUser } = useMutation({
+    mutationFn: async (userData) => {
+      const res = await axiosSecure.post("/users", userData);
+      return res.data;
+    },
+    onSuccess: () => {
+      navigate(from);
+
+    //   Swal.fire({
+    //     icon: "success",
+    //     title: "Login Successful!",
+    //     showConfirmButton: false,
+    //     timer: 1500,
+    //   });
+    },
+    onError: (error) => {
+      Swal.fire({
+        icon: "error",
+        title: "User Save Failed",
+        text: error.response?.data?.message || "Something went wrong!",
+      });
+    },
+  });
 
   const handleGoogleLogin = () => {
     googleLogin()
       .then((result) => {
         const loggedUser = result.user;
-        console.log(loggedUser)
-        // ✅ Optional: send user data to backend here
-       
+        //  Optional: send user data to backend here
+        const userInfo = {
+          name: loggedUser.displayName,
+          email: loggedUser.email,
+          photo: loggedUser.photoURL,
+          role: "user", // default role
+          createdAt: new Date().toISOString(),
+          last_login: new Date().toISOString()
+        }
+        saveGoogleUser(userInfo);
 
-        navigate('/')
+        navigate("/");
       })
       .catch((error) => {
         Swal.fire({
@@ -28,7 +63,7 @@ const GoogleLogin = () => {
   };
   return (
     <button
-    onClick={handleGoogleLogin}
+      onClick={handleGoogleLogin}
       aria-label="Log in with Google"
       className="p-3 rounded-sm hover:cursor-pointer"
     >

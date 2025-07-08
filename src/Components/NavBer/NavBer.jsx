@@ -43,7 +43,7 @@ const NavBer = () => {
         <NavLink to="/classes">All Classes</NavLink>
       </li>
       <li>
-        <NavLink to="/teach">Teach on EduManage</NavLink>
+        <NavLink to="/teach">Teach on SN</NavLink>
       </li>
     </>
   );

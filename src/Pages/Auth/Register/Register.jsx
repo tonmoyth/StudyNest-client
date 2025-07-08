@@ -1,13 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { Link, useNavigate } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import useAuth from "../../../Hooks/useAuth";
 import Swal from "sweetalert2";
 import GoogleLogin from "../../../shared/SocialLogin/GoogleLogin";
+import { useMutation } from "@tanstack/react-query";
+import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 
 const Register = () => {
   const { createUser, updateUserProfile } = useAuth();
   const navigate = useNavigate();
+  const axiosSecure = useAxiosSecure();
+  const [loading,setLoading] = useState(false);
+  const {state} = useLocation();
+  const from = state ? state : '/'
+  
 
   const {
     register,
@@ -16,21 +23,51 @@ const Register = () => {
     formState: { errors },
   } = useForm();
 
+  // useMutation to POST user
+  const {mutate: saveInfo} = useMutation({
+    mutationFn: async (userData) => {
+      const res = await axiosSecure.post("/users", userData);
+      return res.data;
+    },
+    onSuccess: () => {
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "Registration successful!",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+      setLoading(false);
+      navigate(from);
+    },
+    onError: (error) => {
+        console.log(error)
+      Swal.fire({
+        icon: "error",
+        title: "User save failed",
+        text: "Please try again.",
+      });
+    },
+  });
+
   const onSubmit = (data) => {
+    setLoading(true)
     const { email, password, username, photo } = data;
-    console.log(username, photo);
-     createUser(email, password)
+
+    createUser(email, password)
       .then(() => {
         updateUserProfile(username, photo)
           .then(() => {
-            Swal.fire({
-              position: "center",
-              icon: "success",
-              title: "Registration successful!",
-              showConfirmButton: false,
-              timer: 1500,
-            });
-            navigate('/')
+            // store user information database
+            const userInfo = {
+              name: username,
+              email: email,
+              photo: photo,
+              role: "user", // default
+              createdAt: new Date().toISOString(),
+              last_login: new Date().toISOString()
+            };
+            saveInfo(userInfo)
           })
           .catch(() => {
             Swal.fire({
@@ -135,7 +172,7 @@ const Register = () => {
           </div>
 
           <button className="block w-full p-3 text-center rounded-sm dark:text-gray-50 dark:bg-violet-600">
-            Register
+            {loading ? <span className="loading loading-spinner loading-md"></span> : 'Register'}
           </button>
         </form>
 
