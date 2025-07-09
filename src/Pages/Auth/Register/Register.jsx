@@ -11,10 +11,8 @@ const Register = () => {
   const { createUser, updateUserProfile } = useAuth();
   const navigate = useNavigate();
   const axiosSecure = useAxiosSecure();
-  const [loading,setLoading] = useState(false);
-  const {state} = useLocation();
-  const from = state ? state : '/'
-  
+  const [loading, setLoading] = useState(false);
+  const { state } = useLocation();
 
   const {
     register,
@@ -24,7 +22,7 @@ const Register = () => {
   } = useForm();
 
   // useMutation to POST user
-  const {mutate: saveInfo} = useMutation({
+  const { mutate: saveInfo } = useMutation({
     mutationFn: async (userData) => {
       const res = await axiosSecure.post("/users", userData);
       return res.data;
@@ -38,10 +36,11 @@ const Register = () => {
         timer: 1500,
       });
       setLoading(false);
-      navigate(from);
+      reset();
+      navigate("/profileUpdate", { state });
     },
     onError: (error) => {
-        console.log(error)
+      console.log(error);
       Swal.fire({
         icon: "error",
         title: "User save failed",
@@ -51,7 +50,7 @@ const Register = () => {
   });
 
   const onSubmit = (data) => {
-    setLoading(true)
+    setLoading(true);
     const { email, password, username, photo } = data;
 
     createUser(email, password)
@@ -65,9 +64,9 @@ const Register = () => {
               photo: photo,
               role: "user", // default
               createdAt: new Date().toISOString(),
-              last_login: new Date().toISOString()
+              last_login: new Date().toISOString(),
             };
-            saveInfo(userInfo)
+            saveInfo(userInfo);
           })
           .catch(() => {
             Swal.fire({
@@ -84,7 +83,6 @@ const Register = () => {
           text: error.message,
         });
       });
-    reset();
   };
   return (
     <div className="min-h-screen flex justify-center items-center py-10">
@@ -172,7 +170,11 @@ const Register = () => {
           </div>
 
           <button className="block w-full p-3 text-center rounded-sm dark:text-gray-50 dark:bg-violet-600">
-            {loading ? <span className="loading loading-spinner loading-md"></span> : 'Register'}
+            {loading ? (
+              <span className="loading loading-spinner loading-md"></span>
+            ) : (
+              "Register"
+            )}
           </button>
         </form>
 

@@ -10,7 +10,7 @@ const GoogleLogin = () => {
   const navigate = useNavigate();
   const axiosSecure = useAxiosSecure();
   const {state} = useLocation();
-   const from = state ? state : '/'
+  
 
   const { mutate: saveGoogleUser } = useMutation({
     mutationFn: async (userData) => {
@@ -18,7 +18,7 @@ const GoogleLogin = () => {
       return res.data;
     },
     onSuccess: () => {
-      navigate(from);
+      navigate('/profileUpdate', {state});
 
     //   Swal.fire({
     //     icon: "success",

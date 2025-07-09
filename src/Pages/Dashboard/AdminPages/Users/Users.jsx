@@ -31,8 +31,11 @@ const Users = () => {
       return res.data;
     },
   });
+  
 
-  const displayedUsers = search ? searchResults : users;
+const displayedUsers = Array.isArray(search ? searchResults : users)
+  ? (search ? searchResults : users)
+  : [];
   //   user role admin set
   const { mutate: makeAdmin } = useMutation({
     mutationFn: async (email) => {
@@ -116,7 +119,7 @@ const Users = () => {
             {displayedUsers.length === 0 ? (
               <tr>
                 <td colSpan="5" className="text-center text-gray-500 py-4">
-                  {isSearchLoading ? <span class="loading loading-spinner loading-md"></span> : 'No users found.'}
+                  {isSearchLoading || displayedUsers.length === 0 ? <span class="loading loading-spinner loading-md"></span> : 'No users found.'}
                 </td>
               </tr>
             ) : (
