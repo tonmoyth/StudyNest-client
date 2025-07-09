@@ -1,0 +1,132 @@
+import { NavLink, Outlet } from "react-router";
+
+import {
+  FaChalkboardTeacher,
+  FaUsers,
+  FaClipboardList,
+  FaUserCircle,
+} from "react-icons/fa";
+
+const DashboardLayout = () => {
+  const links = (
+    <>
+      {/* admin route */}
+      <li>
+        <NavLink
+          to="/dashboard/teacher-request"
+          className={({ isActive }) =>
+            `flex items-center gap-2 p-2 rounded hover:bg-gray-100 ${
+              isActive ? "bg-violet-100 font-semibold text-violet-700" : ""
+            }`
+          }
+        >
+          <FaChalkboardTeacher className="text-lg" />
+          Teacher Request
+        </NavLink>
+      </li>
+      <li>
+        <NavLink
+          to="/dashboard/users"
+          className={({ isActive }) =>
+            `flex items-center gap-2 p-2 rounded hover:bg-gray-100 ${
+              isActive ? "bg-violet-100 font-semibold text-violet-700" : ""
+            }`
+          }
+        >
+          <FaUsers className="text-lg" />
+          Users
+        </NavLink>
+      </li>
+      <li>
+        <NavLink
+          to="/dashboard/classes"
+          className={({ isActive }) =>
+            `flex items-center gap-2 p-2 rounded hover:bg-gray-100 ${
+              isActive ? "bg-violet-100 font-semibold text-violet-700" : ""
+            }`
+          }
+        >
+          <FaClipboardList className="text-lg" />
+          All Classes
+        </NavLink>
+      </li>
+      <li>
+        <NavLink
+          to="/dashboard/profile"
+          className={({ isActive }) =>
+            `flex items-center gap-2 p-2 rounded hover:bg-gray-100 ${
+              isActive ? "bg-violet-100 font-semibold text-violet-700" : ""
+            }`
+          }
+        >
+          <FaUserCircle className="text-lg" />
+          Profile
+        </NavLink>
+      </li>
+    </>
+  );
+  return (
+    <div className="drawer lg:drawer-open">
+      <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
+      <div className="drawer-content flex flex-col ">
+        {/* Page content here */}
+        <div className="drawer">
+          <input id="my-drawer-3" type="checkbox" className="drawer-toggle" />
+          <div className="drawer-content flex flex-col">
+            {/* Navbar */}
+            <div className="navbar bg-base-300 w-full lg:hidden">
+              <div className="flex-none lg:hidden">
+                <label
+                  htmlFor="my-drawer-3"
+                  aria-label="open sidebar"
+                  className="btn btn-square btn-ghost"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    className="inline-block h-6 w-6 stroke-current"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M4 6h16M4 12h16M4 18h16"
+                    ></path>
+                  </svg>
+                </label>
+              </div>
+              <div className="mx-2 flex-1 px-2">Dashboard</div>
+            </div>
+            {/* Page content here */}
+            <Outlet></Outlet>
+          </div>
+          <div className="drawer-side">
+            <label
+              htmlFor="my-drawer-3"
+              aria-label="close sidebar"
+              className="drawer-overlay"
+            ></label>
+            <ul className="menu bg-base-200 min-h-full w-80 p-4">
+              {/* Sidebar content here */}
+              {links}
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div className="drawer-side">
+        <label
+          htmlFor="my-drawer-2"
+          aria-label="close sidebar"
+          className="drawer-overlay"
+        ></label>
+        <ul className="menu bg-base-200 text-base-content min-h-full w-80 p-4">
+          {/* Sidebar content here */}
+          {links}
+        </ul>
+      </div>
+    </div>
+  );
+};
+
+export default DashboardLayout;

@@ -22,6 +22,7 @@ const TeachOnSN = () => {
     data: teacher = {},
     isLoading,
     isError,
+    refetch
   } = useQuery({
     queryKey: ["teacher", user?.email],
     enabled: !!user?.email,
@@ -31,7 +32,7 @@ const TeachOnSN = () => {
     },
   });
 
-  const { mutate: saveTeacher, isPending } = useMutation({
+  const { mutate: saveTeacher, isPending, } = useMutation({
     mutationFn: async (teacherData) => {
       const res = await axiosSecure.post("/teacher", teacherData);
       return res.data;
@@ -42,7 +43,8 @@ const TeachOnSN = () => {
         text: "Submitted for review!",
         icon: "success",
       });
-      reset(); // form reset
+      reset();
+      refetch() // form reset
     },
     onError: (error) => {
       Swal.fire({
@@ -85,7 +87,7 @@ const TeachOnSN = () => {
       </h2>
 
       {/* ✅ If already approved teacher, show message only */}
-      {teacher?.status === "approved" ? (
+      {teacher?.status === "accepted" ? (
         <div className="text-center text-green-600 font-medium text-lg">
            You are already approved as a teacher!
         </div>

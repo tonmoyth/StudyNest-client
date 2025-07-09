@@ -5,6 +5,9 @@ import Login from "../../Pages/Auth/Login/Login";
 import Register from "../../Pages/Auth/Register/Register";
 import PrivateRoutes from "../PrivateRoutes/PrivateRoutes";
 import TeachOnSN from "../../Pages/TeachOnSN/TeachOnSN";
+import DashboardLayout from "../../Layouts/DashboardLayout";
+import TeacherRequest from "../../Pages/Dashboard/AdminPages/TeacherRequest/TeacherRequest";
+import Users from "../../Pages/Dashboard/AdminPages/Users/Users";
 
 
 export const Router = createBrowserRouter([
@@ -30,4 +33,18 @@ export const Router = createBrowserRouter([
         }
     ]
   },
+    {
+      path: 'dashboard',
+      element: <PrivateRoutes><DashboardLayout></DashboardLayout></PrivateRoutes>,
+      children: [
+        {
+          path: 'teacher-request',
+          Component: TeacherRequest
+        },
+        {
+          path: 'users',
+          Component: Users
+        }
+      ]
+    }
 ]);
