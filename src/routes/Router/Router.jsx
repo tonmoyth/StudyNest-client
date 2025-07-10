@@ -12,6 +12,7 @@ import Profile from "../../Pages/Dashboard/Profile/Profile";
 import ProfileUpdate from "../../Pages/ProfileUpdate/ProfileUpdate";
 import AddClass from "../../Pages/Dashboard/TeacherPages/AddClass/AddClass";
 import MyClass from "../../Pages/Dashboard/TeacherPages/MyClass/MyClass";
+import SeeDetails from "../../Pages/Dashboard/TeacherPages/MyClass/SeeDetails";
 
 
 export const Router = createBrowserRouter([
@@ -64,6 +65,10 @@ export const Router = createBrowserRouter([
         {
           path: 'my-classes',
           Component: MyClass
+        },
+        {
+          path: 'my-class/:id',
+          Component: SeeDetails
         }
       ]
     }
