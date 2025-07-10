@@ -4,14 +4,15 @@ import { useLocation, useNavigate } from "react-router";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import useAuth from "../../Hooks/useAuth";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import Loading from "../../Components/Loading/Loading";
 
 const ProfileUpdate = () => {
   const { state } = useLocation();
   const from = state ? state : "/";
   const navigate = useNavigate();
   const axiosSecure = useAxiosSecure();
-  const { user } = useAuth();
+  const { user ,loading} = useAuth();
 
   const {
     register,
@@ -19,6 +20,19 @@ const ProfileUpdate = () => {
     formState: { errors },
     reset,
   } = useForm();
+
+   const {
+    data: userData = {},
+    isLoading,
+  } = useQuery({
+    queryKey: ["user-profile", user?.email],
+    enabled: !!user?.email && !loading,
+    queryFn: async () => {
+      const res = await axiosSecure.get(`/users/profile?email=${user.email}`);
+      return res.data;
+    },
+  });
+  
 
   const { mutate: updateUser, isPending } = useMutation({
     mutationFn: async (userData) => {
@@ -47,6 +61,13 @@ const ProfileUpdate = () => {
   const onSubmit = async (data) => {
     updateUser(data);
   };
+
+  if(isLoading){
+    return <Loading></Loading>
+  }
+  if(userData?.phone){
+    navigate(from);
+  }
 
   return (
     <div className="max-w-xl mx-auto p-8 bg-white shadow rounded-xl mt-10">

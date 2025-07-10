@@ -10,6 +10,8 @@ import TeacherRequest from "../../Pages/Dashboard/AdminPages/TeacherRequest/Teac
 import Users from "../../Pages/Dashboard/AdminPages/Users/Users";
 import Profile from "../../Pages/Dashboard/Profile/Profile";
 import ProfileUpdate from "../../Pages/ProfileUpdate/ProfileUpdate";
+import AddClass from "../../Pages/Dashboard/TeacherPages/AddClass/AddClass";
+import MyClass from "../../Pages/Dashboard/TeacherPages/MyClass/MyClass";
 
 
 export const Router = createBrowserRouter([
@@ -54,6 +56,14 @@ export const Router = createBrowserRouter([
         {
           path: 'profile',
           Component:Profile
+        },
+        {
+          path: 'add-class',
+          Component: AddClass
+        },
+        {
+          path: 'my-classes',
+          Component: MyClass
         }
       ]
     }

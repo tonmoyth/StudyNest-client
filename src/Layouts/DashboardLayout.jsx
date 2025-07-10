@@ -5,51 +5,93 @@ import {
   FaUsers,
   FaClipboardList,
   FaUserCircle,
+  FaPlus,
+  FaChalkboard,
 } from "react-icons/fa";
+import useUserRole from "../Hooks/useUserRole";
 
 const DashboardLayout = () => {
+  const { role, isRoleLoading, refetchRole } = useUserRole();
+
   const links = (
     <>
       {/* admin route */}
-      <li>
-        <NavLink
-          to="/dashboard/teacher-request"
-          className={({ isActive }) =>
-            `flex items-center gap-2 p-2 rounded hover:bg-gray-100 ${
-              isActive ? "bg-violet-100 font-semibold text-violet-700" : ""
-            }`
-          }
-        >
-          <FaChalkboardTeacher className="text-lg" />
-          Teacher Request
-        </NavLink>
-      </li>
-      <li>
-        <NavLink
-          to="/dashboard/users"
-          className={({ isActive }) =>
-            `flex items-center gap-2 p-2 rounded hover:bg-gray-100 ${
-              isActive ? "bg-violet-100 font-semibold text-violet-700" : ""
-            }`
-          }
-        >
-          <FaUsers className="text-lg" />
-          Users
-        </NavLink>
-      </li>
-      <li>
-        <NavLink
-          to="/dashboard/classes"
-          className={({ isActive }) =>
-            `flex items-center gap-2 p-2 rounded hover:bg-gray-100 ${
-              isActive ? "bg-violet-100 font-semibold text-violet-700" : ""
-            }`
-          }
-        >
-          <FaClipboardList className="text-lg" />
-          All Classes
-        </NavLink>
-      </li>
+      {role === "admin" && (
+        <>
+          <li>
+            <NavLink
+              to="/dashboard/teacher-request"
+              className={({ isActive }) =>
+                `flex items-center gap-2 p-2 rounded hover:bg-gray-100 ${
+                  isActive ? "bg-violet-100 font-semibold text-violet-700" : ""
+                }`
+              }
+            >
+              <FaChalkboardTeacher className="text-lg" />
+              Teacher Request
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              to="/dashboard/users"
+              className={({ isActive }) =>
+                `flex items-center gap-2 p-2 rounded hover:bg-gray-100 ${
+                  isActive ? "bg-violet-100 font-semibold text-violet-700" : ""
+                }`
+              }
+            >
+              <FaUsers className="text-lg" />
+              Users
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              to="/dashboard/classes"
+              className={({ isActive }) =>
+                `flex items-center gap-2 p-2 rounded hover:bg-gray-100 ${
+                  isActive ? "bg-violet-100 font-semibold text-violet-700" : ""
+                }`
+              }
+            >
+              <FaClipboardList className="text-lg" />
+              All Classes
+            </NavLink>
+          </li>
+        </>
+      )}
+
+      {/* teacher route */}
+      {role === "teacher" && (
+        <>
+          <li>
+            <NavLink
+              to="/dashboard/add-class"
+              className={({ isActive }) =>
+                `flex items-center gap-2 p-2 rounded hover:bg-gray-100 ${
+                  isActive ? "bg-violet-100 font-semibold text-violet-700" : ""
+                }`
+              }
+            >
+              <FaPlus className="text-lg" />
+              Add Class
+            </NavLink>
+          </li>
+
+          <li>
+            <NavLink
+              to="/dashboard/my-classes"
+              className={({ isActive }) =>
+                `flex items-center gap-2 p-2 rounded hover:bg-gray-100 ${
+                  isActive ? "bg-violet-100 font-semibold text-violet-700" : ""
+                }`
+              }
+            >
+              <FaChalkboard className="text-lg" />
+              My Classes
+            </NavLink>
+          </li>
+        </>
+      )}
       <li>
         <NavLink
           to="/dashboard/profile"
