@@ -46,7 +46,7 @@ const DashboardLayout = () => {
           </li>
           <li>
             <NavLink
-              to="/dashboard/classes"
+              to="/dashboard/all_classes"
               className={({ isActive }) =>
                 `flex items-center gap-2 p-2 rounded hover:bg-gray-100 ${
                   isActive ? "bg-violet-100 font-semibold text-violet-700" : ""
