@@ -14,6 +14,9 @@ import AddClass from "../../Pages/Dashboard/TeacherPages/AddClass/AddClass";
 import MyClass from "../../Pages/Dashboard/TeacherPages/MyClass/MyClass";
 import SeeDetails from "../../Pages/Dashboard/TeacherPages/MyClass/SeeDetails";
 import AllClasses from "../../Pages/Dashboard/AdminPages/AllClasses/AllClasses";
+import Classes from "../../Pages/Classes/Classes";
+import ClassDetails from "../../Pages/Classes/ClassDetails";
+import Payment from "../../Pages/Payment/Payment";
 
 
 export const Router = createBrowserRouter([
@@ -24,6 +27,18 @@ export const Router = createBrowserRouter([
         {
             index: true,
             Component: Home
+        },
+        {
+          path: 'classes',
+          Component: Classes
+        },
+        {
+          path: 'class/:id',
+          element: <PrivateRoutes><ClassDetails></ClassDetails></PrivateRoutes>
+        },
+        {
+          path: 'payment/:id',
+          element: <PrivateRoutes><Payment></Payment></PrivateRoutes>
         },
         {
           path: 'teach',
