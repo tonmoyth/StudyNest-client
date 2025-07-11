@@ -7,6 +7,7 @@ import {
   FaUserCircle,
   FaPlus,
   FaChalkboard,
+  FaBookOpen,
 } from "react-icons/fa";
 import useUserRole from "../Hooks/useUserRole";
 
@@ -59,7 +60,6 @@ const DashboardLayout = () => {
           </li>
         </>
       )}
-
       {/* teacher route */}
       {role === "teacher" && (
         <>
@@ -92,6 +92,25 @@ const DashboardLayout = () => {
           </li>
         </>
       )}
+      {/* student */}
+      {role === "student" && (
+        <>
+          <li>
+            <NavLink
+              to="/dashboard/my-enrolled-class"
+              className={({ isActive }) =>
+                `flex items-center gap-2 p-2 rounded hover:bg-gray-100 ${
+                  isActive ? "bg-violet-100 font-semibold text-violet-700" : ""
+                }`
+              }
+            >
+              <FaBookOpen className="text-lg" />
+              My Enrolled Class
+            </NavLink>
+          </li>
+        </>
+      )}
+
       <li>
         <NavLink
           to="/dashboard/profile"

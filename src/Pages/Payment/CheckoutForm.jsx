@@ -1,6 +1,6 @@
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import "./style.css";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import Loading from "../../Components/Loading/Loading";
@@ -15,6 +15,7 @@ const CheckoutForm = () => {
   const axiosSecure = useAxiosSecure();
   const { user } = useAuth();
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const {
     data: classData,
@@ -42,6 +43,7 @@ const CheckoutForm = () => {
         timer: 1500,
         showConfirmButton: false,
       });
+      navigate('/dashboard/my-enrolled-class')
     },
     onError: (error) => {
       setLoading(false);

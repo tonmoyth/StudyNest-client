@@ -17,6 +17,8 @@ import AllClasses from "../../Pages/Dashboard/AdminPages/AllClasses/AllClasses";
 import Classes from "../../Pages/Classes/Classes";
 import ClassDetails from "../../Pages/Classes/ClassDetails";
 import Payment from "../../Pages/Payment/Payment";
+import MyEnroll from "../../Pages/Dashboard/StudentPages/MyEnroll";
+import MyEnrolDetails from "../../Pages/Dashboard/StudentPages/MyEnrolDetails";
 
 
 export const Router = createBrowserRouter([
@@ -73,6 +75,14 @@ export const Router = createBrowserRouter([
         {
           path: 'all_classes',
           Component: AllClasses
+        },
+        {
+          path: 'my-enrolled-class',
+          Component: MyEnroll
+        },
+        {
+          path: 'myEnroll-class/:id',
+          Component: MyEnrolDetails
         },
         {
           path: 'profile',

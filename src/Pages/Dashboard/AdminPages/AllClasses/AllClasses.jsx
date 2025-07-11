@@ -15,10 +15,11 @@ const AllClasses = () => {
   } = useQuery({
     queryKey: ["all-classes"],
     queryFn: async () => {
-      const res = await axiosSecure.get("/classes/all");
+      const res = await axiosSecure.get("/classes_all");
       return res.data;
     },
   });
+
 
   const { mutate: approveClass } = useMutation({
     mutationFn: async (id) => {
