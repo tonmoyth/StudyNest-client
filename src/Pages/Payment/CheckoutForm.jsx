@@ -1,10 +1,12 @@
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import "./style.css";
 import { useParams } from "react-router";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import Loading from "../../Components/Loading/Loading";
 import useAuth from "../../Hooks/useAuth";
+import Swal from "sweetalert2";
+import { useState } from "react";
 
 const CheckoutForm = () => {
   const stripe = useStripe();
@@ -12,6 +14,7 @@ const CheckoutForm = () => {
   const { id } = useParams();
   const axiosSecure = useAxiosSecure();
   const { user } = useAuth();
+  const [loading, setLoading] = useState(false);
 
   const {
     data: classData,
@@ -26,46 +29,66 @@ const CheckoutForm = () => {
     },
   });
 
-  console.log(classData);
+  const { mutate: enrollStudent } = useMutation({
+    mutationFn: async (paymentInfo) => {
+      const res = await axiosSecure.post("/enroll", paymentInfo);
+      return res.data;
+    },
+    onSuccess: () => {
+      setLoading(false);
+      Swal.fire({
+        icon: "success",
+        title: "Payment successful!",
+        timer: 1500,
+        showConfirmButton: false,
+      });
+    },
+    onError: (error) => {
+      setLoading(false);
+      Swal.fire({
+        icon: "error",
+        title: "Payment failed",
+        text: error.message || "Something went wrong",
+      });
+    },
+  });
 
   const amount = parseInt(classData?.price);
   const amountCent = amount * 100;
 
   const handleSubmit = async (event) => {
-    // Block native form submission.
+    setLoading(true);
     event.preventDefault();
 
-    if (!stripe || !elements) {
-      // Stripe.js has not loaded yet. Make sure to disable
-      // form submission until Stripe.js has loaded.
-      return;
-    }
+    if (!stripe || !elements) return;
 
-    // Get a reference to a mounted CardElement. Elements knows how
-    // to find your CardElement because there can only ever be one of
-    // each type of element.
     const card = elements.getElement(CardElement);
+    if (!card) return;
 
-    if (card == null) {
-      return;
-    }
+    try {
+      // Step 1: Create payment method
+      const { error, paymentMethod } = await stripe.createPaymentMethod({
+        type: "card",
+        card,
+      });
 
-    // Use your card Element with other Stripe.js APIs
-    const { error, paymentMethod } = await stripe.createPaymentMethod({
-      type: "card",
-      card,
-    });
+      if (error) {
+        Swal.fire({
+          icon: "error",
+          title: "Payment Method Error",
+          text: error.message,
+        });
+        setLoading(false);
+        return;
+      }
 
-    if (error) {
-      console.log("[error]", error);
-    } else {
-      console.log("[PaymentMethod]", paymentMethod);
-
+      //  Get clientSecret from server
       const res = await axiosSecure.post("/create-payment-intent", {
         amountCent,
       });
       const clientSecret = res?.data?.clientSecret;
 
+      //  Confirm payment
       const { paymentIntent, error: confirmError } =
         await stripe.confirmCardPayment(clientSecret, {
           payment_method: {
@@ -79,16 +102,43 @@ const CheckoutForm = () => {
         });
 
       if (confirmError) {
-        console.log(confirmError.message);
-        // setProcessing(false);
-      } else if (paymentIntent.status === "succeeded") {
-        // setSuccess("Payment Successful!");
-        // Optionally store payment info to your DB here
-        console.log('successfully')
+        Swal.fire({
+          icon: "error",
+          title: "Payment Failed",
+          text: confirmError.message,
+        });
+        setLoading(false);
+        return;
       }
+
+      //  Payment success
+      if (paymentIntent.status === "succeeded") {
+
+        // Store payment info to DB here
+        const paymentInfo = {
+          name: user?.displayName,
+          email: user?.email,
+          phone: user?.phone || "N/A",
+          amount: paymentIntent.amount / 100,
+          transactionId: paymentIntent.id,
+          classId: id,
+          classTitle: classData.title,
+          status: "paid",
+          date: new Date(),
+          method: paymentMethod.type,
+        };
+
+        enrollStudent(paymentInfo);
+      }
+    } catch (err) {
+      Swal.fire({
+        icon: "error",
+        title: "Unexpected Error",
+        text: err.message || "Something went wrong. Please try again.",
+      });
+      setLoading(false);
     }
   };
-
   if (isLoading) {
     return <Loading></Loading>;
   }
@@ -123,10 +173,14 @@ const CheckoutForm = () => {
           {/* {cardError && <p className="text-red-500 text-sm">{cardError}</p>} */}
           <button
             type="submit"
-            disabled={!stripe}
+            disabled={!stripe || loading}
             className="btn btn-primary w-full py-2 rounded-md"
           >
-            Pay Now
+            {loading ? (
+              <span className="loading loading-spinner loading-md"></span>
+            ) : (
+              "Pay Now"
+            )}
           </button>
         </form>
       </div>
