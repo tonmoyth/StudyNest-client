@@ -17,20 +17,21 @@ const SeeDetails = () => {
     queryKey: ["enrollments", user?.email],
     enabled: !!user.email,
     queryFn: async () => {
-      const res = await axiosSecure.get(`/classes_enrollments?email=${user?.email}`);
+      const res = await axiosSecure.get(`/classes_enrollments/${id}`);
       return res.data;
     },
   });
+  
 
 
     const { data: assignments } = useQuery({
       queryKey: ["assignments", user?.email],
       queryFn: async () => {
-        const res = await axiosSecure.get(`/assignments/count?email=${user?.email}`);
+        const res = await axiosSecure.get(`/assignments/count/${id}`);
         return res.data;
       },
     });
-
+  
 
   //   const { data: submissions } = useQuery({
   //     queryKey: ["submissions", id],
@@ -105,19 +106,19 @@ const SeeDetails = () => {
           <div className="bg-violet-100 p-4 rounded shadow text-center">
             <h3 className="text-lg font-semibold">Total Enrollments</h3>
             <p className="text-2xl font-bold text-violet-700">
-              {enrollmentCount?.totalEnrollments || 0}
+              {enrollmentCount?.enrollments || 0}
             </p>
           </div>
           <div className="bg-green-100 p-4 rounded shadow text-center">
             <h3 className="text-lg font-semibold">Total Assignments</h3>
             <p className="text-2xl font-bold text-green-700">
-              {assignments?.assignmentCount || 0}
+               {assignments?.length || 0}
             </p>
           </div>
           <div className="bg-orange-100 p-4 rounded shadow text-center">
             <h3 className="text-lg font-semibold">Total Submissions</h3>
             <p className="text-2xl font-bold text-orange-700">
-              {/* {submissions?.length || 0} */}0
+              { 0}
             </p>
           </div>
         </div>
