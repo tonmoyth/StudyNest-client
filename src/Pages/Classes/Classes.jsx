@@ -40,7 +40,7 @@ const Classes = () => {
             {classItem.description?.slice(0, 80)}...
           </p>
           <p className="text-sm text-blue-600">
-            Total Enrolled: {classItem.enrollmentCount || 0}
+            Total Enrolled: {classItem.enrollments || 0}
           </p>
           <Link
             to={`/class/${classItem._id}`} 

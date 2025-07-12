@@ -9,8 +9,22 @@ const Profile = () => {
   const { user } = useAuth();
 
   const {
-    data: userData = [],
+    data: teacher = {},
     isLoading,
+    isError,
+    refetch,
+  } = useQuery({
+    queryKey: ["teacher", user?.email],
+    enabled: !!user?.email,
+    queryFn: async () => {
+      const res = await axiosSecure.get(`/teacher?email=${user.email}`);
+      return res.data;
+    },
+  });
+
+  const {
+    data: userData = [],
+ 
     // isError,
     // error,
     // refetch,
@@ -44,7 +58,7 @@ const Profile = () => {
           </h2>
           <p className="text-sm text-gray-500">{userData?.email}</p>
           <p className="text-sm text-gray-500">
-            <strong>Role:</strong> {userData?.role || "user"}
+            <strong>Role:</strong> {teacher.status === 'accepted' ? 'teacher' : userData?.role || "user"}
           </p>
           <p className="text-sm text-gray-500">
             <strong>Phone:</strong> {userData?.phone || "N/A"}

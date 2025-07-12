@@ -9,7 +9,7 @@ const Users = () => {
   const [search, setSearch] = useState("");
 
   //   search
-  const { data: searchResults = [],isLoading: isSearchLoading } = useQuery({
+  const { data: searchResults = [], isLoading: isSearchLoading } = useQuery({
     queryKey: ["search-user", search],
     enabled: !!search,
     queryFn: async () => {
@@ -31,11 +31,12 @@ const Users = () => {
       return res.data;
     },
   });
-  
 
-const displayedUsers = Array.isArray(search ? searchResults : users)
-  ? (search ? searchResults : users)
-  : [];
+  const displayedUsers = Array.isArray(search ? searchResults : users)
+    ? search
+      ? searchResults
+      : users
+    : [];
   //   user role admin set
   const { mutate: makeAdmin } = useMutation({
     mutationFn: async (email) => {
@@ -68,7 +69,7 @@ const displayedUsers = Array.isArray(search ? searchResults : users)
   };
 
   if (isUsersLoading) return <Loading></Loading>;
-  
+
   if (isError)
     return <p className="text-center text-red-500">Failed to load users.</p>;
 
@@ -115,11 +116,16 @@ const displayedUsers = Array.isArray(search ? searchResults : users)
             </tr>
           </thead>
           <tbody>
-            
-            {displayedUsers.length === 0 ? (
+            {isSearchLoading ? (
+              <tr>
+                <td colSpan="5" className="text-center py-4">
+                  <span className="loading loading-spinner loading-md"></span>
+                </td>
+              </tr>
+            ) : displayedUsers.length === 0 ? (
               <tr>
                 <td colSpan="5" className="text-center text-gray-500 py-4">
-                  {isSearchLoading || displayedUsers.length === 0 ? <span class="loading loading-spinner loading-md"></span> : 'No users found.'}
+                  No users found.
                 </td>
               </tr>
             ) : (

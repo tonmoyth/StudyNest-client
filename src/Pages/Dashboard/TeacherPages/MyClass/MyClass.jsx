@@ -127,9 +127,10 @@ const MyClass = () => {
               Update
             </Button>
             <button
+            
             onClick={() => handleSeeDetails(classItem._id)}
               className="btn btn-sm btn-secondary"
-            //   disabled={classItem.status === "pending"}
+              disabled={classItem.status === "pending"}
             >
               See Details
             </button>

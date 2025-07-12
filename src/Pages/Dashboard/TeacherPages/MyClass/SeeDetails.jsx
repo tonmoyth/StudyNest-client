@@ -33,13 +33,14 @@ const SeeDetails = () => {
     });
   
 
-  //   const { data: submissions } = useQuery({
-  //     queryKey: ["submissions", id],
-  //     queryFn: async () => {
-  //       const res = await axiosSecure.get(`/classes/${id}/submissions`);
-  //       return res.data;
-  //     },
-  //   });
+    const { data: submissions } = useQuery({
+      queryKey: ["submissions", id],
+      queryFn: async () => {
+        const res = await axiosSecure.get(`/assignment-submission-count/${id}`);
+        return res.data;
+      },
+    });
+   
 
   const queryClient = useQueryClient();
 
@@ -118,7 +119,7 @@ const SeeDetails = () => {
           <div className="bg-orange-100 p-4 rounded shadow text-center">
             <h3 className="text-lg font-semibold">Total Submissions</h3>
             <p className="text-2xl font-bold text-orange-700">
-              { 0}
+              {submissions?.submissionCount || 0}
             </p>
           </div>
         </div>

@@ -10,10 +10,27 @@ import {
   FaBookOpen,
 } from "react-icons/fa";
 import useUserRole from "../Hooks/useUserRole";
+import { useQuery } from "@tanstack/react-query";
+import useAxiosSecure from "../Hooks/useAxiosSecure";
+import useAuth from "../Hooks/useAuth";
+import Loading from "../Components/Loading/Loading";
 
 const DashboardLayout = () => {
   const { role, isRoleLoading, refetchRole } = useUserRole();
-
+  const axiosSecure = useAxiosSecure();
+  const { user } = useAuth();
+  const { data: teacher = {}, isLoading } = useQuery({
+    queryKey: ["teacher", user?.email],
+    enabled: !!user?.email,
+    queryFn: async () => {
+      const res = await axiosSecure.get(`/teacher?email=${user.email}`);
+      return res.data;
+    },
+  });
+  if (isLoading) {
+    return <Loading></Loading>;
+  }
+  console.log(teacher.status, role);
   const links = (
     <>
       {/* admin route */}
@@ -61,7 +78,7 @@ const DashboardLayout = () => {
         </>
       )}
       {/* teacher route */}
-      {role === "teacher" && (
+      {(role === "teacher" || teacher?.status === "accepted") && (
         <>
           <li>
             <NavLink

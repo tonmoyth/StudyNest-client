@@ -19,6 +19,7 @@ import ClassDetails from "../../Pages/Classes/ClassDetails";
 import Payment from "../../Pages/Payment/Payment";
 import MyEnroll from "../../Pages/Dashboard/StudentPages/MyEnroll";
 import MyEnrolDetails from "../../Pages/Dashboard/StudentPages/MyEnrolDetails";
+import ForbiddenPage from "../../Pages/Forbidden/ForbiddenPage";
 
 
 export const Router = createBrowserRouter([
@@ -33,6 +34,10 @@ export const Router = createBrowserRouter([
         {
           path: 'classes',
           Component: Classes
+        },
+        {
+          path: 'forbidden',
+          Component: ForbiddenPage
         },
         {
           path: 'class/:id',

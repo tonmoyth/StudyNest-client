@@ -11,7 +11,7 @@ const GoogleLogin = () => {
   const axiosSecure = useAxiosSecure();
   const {state} = useLocation();
   
-
+console.log('axiosSecure:', axiosSecure);
   const { mutate: saveGoogleUser } = useMutation({
     mutationFn: async (userData) => {
       const res = await axiosSecure.post("/users", userData);
@@ -28,6 +28,7 @@ const GoogleLogin = () => {
     //   });
     },
     onError: (error) => {
+      console.log(error)
       Swal.fire({
         icon: "error",
         title: "User Save Failed",
@@ -49,6 +50,7 @@ const GoogleLogin = () => {
           createdAt: new Date().toISOString(),
           last_login: new Date().toISOString()
         }
+        console.log(userInfo)
         saveGoogleUser(userInfo);
 
         navigate("/");
