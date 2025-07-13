@@ -2,9 +2,9 @@ import React from 'react';
 import HeroSection from '../Hero/HeroSection';
 import PartnersSection from '../Partners/PartnersSection';
 import PopularCourses from '../PopularCourses/PopularCourses';
-import TeacherFeedbackCarousel from '../TeacherFeedback/TeacherFeedback';
 import WebsiteStatsSection from '../WebsiteStatsSection/WebsiteStatsSection';
 import BecomeTeacherSection from '../BecomeTeacherSection/BecomeTeacherSection';
+import StudentsFeedback from '../StudentsFeedback/StudentsFeedback';
 
 const Home = () => {
     return (
@@ -12,7 +12,7 @@ const Home = () => {
            <HeroSection></HeroSection>
            <PartnersSection></PartnersSection>
            <PopularCourses></PopularCourses>
-           <TeacherFeedbackCarousel></TeacherFeedbackCarousel>
+          <StudentsFeedback></StudentsFeedback>
            <WebsiteStatsSection></WebsiteStatsSection>
            <BecomeTeacherSection></BecomeTeacherSection>
         </div>
