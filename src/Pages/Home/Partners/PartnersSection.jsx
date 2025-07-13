@@ -13,7 +13,7 @@ const PartnersSection = () => {
   return (
     <section className="py-10 lg:py-12 ">
       <div className=" text-center">
-        <h2 className="text-3xl font-bold mb-2">Our Partners</h2>
+        <h2 className="text-2xl lg:text-4xl font-bold mb-2">Our Partners</h2>
         <p className=" mb-4 max-w-2xl mx-auto">
           We are proud to work with leading organizations who support our
           mission to educate and empower.

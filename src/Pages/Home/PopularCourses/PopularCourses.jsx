@@ -29,7 +29,7 @@ const PopularCourses = () => {
   return (
     <section className="py-10 lg:py-12">
       <div className="container mx-auto px-4 text-center">
-        <h2 className="text-3xl font-bold mb-2"> Popular Courses</h2>
+        <h2 className="text-2xl lg:text-4xl font-bold mb-2"> Popular Courses</h2>
         <p className="mb-8 max-w-2xl mx-auto">
           These courses are trending right now based on highest enrollment.
         </p>

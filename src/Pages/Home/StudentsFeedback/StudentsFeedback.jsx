@@ -24,7 +24,7 @@ const StudentsFeedback = () => {
   return (
     <section className="py-16">
       <div className="container mx-auto px-4 text-center">
-        <h2 className="text-3xl font-bold mb-2"> Students Feedback</h2>
+        <h2 className="text-2xl lg:text-4xl font-bold mb-2"> Students Feedback</h2>
         <p className="mb-8 max-w-xl mx-auto">
           See what our learners have to say about their classes and instructors.
         </p>
