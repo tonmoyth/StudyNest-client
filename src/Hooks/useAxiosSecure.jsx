@@ -12,8 +12,8 @@ const useAxiosSecure = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!loading && user) {
-      axiosSecure.interceptors.request.use(
+    if (loading ) return
+      const secure = axiosSecure.interceptors.request.use(
         (config) => {
           config.headers.Authorization = `Bearer ${user.accessToken}`;
           return config;
@@ -22,7 +22,8 @@ const useAxiosSecure = () => {
           return Promise.reject(error);
         }
       );
-    }
+    
+    return () => axiosSecure.interceptors.request.eject(secure)
   }, [user, loading]);
 
   axiosSecure.interceptors.response.use(

@@ -3,6 +3,7 @@ import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 import Loading from "../../Components/Loading/Loading";
 import { Link } from "react-router";
+import ButtonOne from "../../Components/ButtonOne/ButtonOne";
 
 const Classes = () => {
   const axiosSecure = useAxiosSecure();
@@ -22,34 +23,36 @@ const Classes = () => {
   if (isError)
     return <p className="text-center text-red-500">Something went wrong!</p>;
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mt-10">
-      {classes?.map((classItem) => (
-        <div
-          key={classItem._id}
-          className="bg-white rounded-lg shadow-md p-5 space-y-3"
-        >
-          <img
-            src={classItem.image}
-            alt={classItem.title}
-            className="w-full h-48 object-cover rounded"
-          />
-          <h2 className="text-xl font-bold">{classItem.title}</h2>
-          <p className="text-gray-600">By: {classItem.name}</p>
-          <p className="text-gray-800 font-semibold">${classItem.price}</p>
-          <p className="text-sm text-gray-500">
-            {classItem.description?.slice(0, 80)}...
-          </p>
-          <p className="text-sm text-blue-600">
-            Total Enrolled: {classItem.enrollments || 0}
-          </p>
-          <Link
-            to={`/class/${classItem._id}`} 
-            className="btn btn-primary w-full"
+    <div className="w-11/12 mx-auto">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 py-10">
+        {classes?.map((classItem) => (
+          <div
+            key={classItem._id}
+            className="bg-[var(--background)] flex flex-col justify-between rounded-lg shadow-md p-3 space-y-2"
           >
-            Enroll
-          </Link>
-        </div>
-      ))}
+            <img
+              src={classItem.image}
+              alt={classItem.title}
+              className="w-full h-48 object-cover rounded"
+            />
+            <h2 className="text-xl font-bold">{classItem.title}</h2>
+            <p className=""> {classItem.name}</p>
+            <p className=" font-semibold">${classItem.price}</p>
+            <p className="text-sm ">
+              {classItem.description?.slice(0, 80)}...
+            </p>
+            <p className="text-sm text-primary">
+              Total Enrolled: {classItem.enrollments || 0}
+            </p>
+            <Link
+              to={`/class/${classItem._id}`}
+              
+            >
+              <ButtonOne level='Enroll'></ButtonOne>
+            </Link>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };

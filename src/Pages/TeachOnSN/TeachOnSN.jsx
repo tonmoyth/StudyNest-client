@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import Loading from "../../Components/Loading/Loading";
+import ButtonOne from "../../Components/ButtonOne/ButtonOne";
 
 const TeachOnSN = () => {
   const { user } = useAuth();
@@ -22,7 +23,7 @@ const TeachOnSN = () => {
     data: teacher = {},
     isLoading,
     isError,
-    refetch
+    refetch,
   } = useQuery({
     queryKey: ["teacher", user?.email],
     enabled: !!user?.email,
@@ -32,7 +33,7 @@ const TeachOnSN = () => {
     },
   });
 
-  const { mutate: saveTeacher, isPending, } = useMutation({
+  const { mutate: saveTeacher, isPending } = useMutation({
     mutationFn: async (teacherData) => {
       const res = await axiosSecure.post("/teacher", teacherData);
       return res.data;
@@ -44,7 +45,7 @@ const TeachOnSN = () => {
         icon: "success",
       });
       reset();
-      refetch() // form reset
+      refetch(); // form reset
     },
     onError: (error) => {
       Swal.fire({
@@ -66,7 +67,6 @@ const TeachOnSN = () => {
       status: "pending", // default status
       appliedAt: new Date().toISOString(), // optional timestamp
     };
-    console.log(user?.photoURL);
     saveTeacher(teacherData);
   };
 
@@ -81,15 +81,15 @@ const TeachOnSN = () => {
     });
   }
   return (
-    <div className="max-w-xl mx-auto bg-white p-8 my-10 rounded-xl shadow">
+    <div className="max-w-2xl mx-auto bg-[var(--background)] p-8 my-8 rounded-xl">
       <h2 className="text-2xl font-bold text-center mb-6">
         Apply for Teaching Position
       </h2>
 
       {/* ✅ If already approved teacher, show message only */}
       {teacher?.status === "accepted" ? (
-        <div className="text-center text-green-600 font-medium text-lg">
-           You are already approved as a teacher!
+        <div className="text-center text-primary font-medium text-lg">
+          You are already approved as a teacher!
         </div>
       ) : (
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
@@ -191,21 +191,20 @@ const TeachOnSN = () => {
           </div>
 
           {/* Submit Button */}
-          <button
-            type="submit"
+         <div className="flex justify-center">
+           <ButtonOne
+            loading={isPending}
             disabled={isPending || teacher?.status === "pending"}
-            className="btn btn-primary w-full mt-4"
-          >
-            {teacher?.status === "pending" ? (
-              "Waiting for Review"
-            ) : teacher?.status === "rejected" ? (
-              "Request Again"
-            ) : isPending ? (
-              <span className="loading loading-spinner loading-md"></span>
-            ) : (
-              "Submit for Review"
-            )}
-          </button>
+            level={
+              teacher?.status === "pending"
+                ? "Waiting for Review"
+                : teacher?.status === "rejected"
+                ? "Request Again"
+                : "Submit for Review"
+            }
+          ></ButtonOne>
+         </div>
+         
         </form>
       )}
     </div>

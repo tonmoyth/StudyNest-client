@@ -8,7 +8,7 @@ import { useMutation } from "@tanstack/react-query";
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 
 const Register = () => {
-  const { createUser, updateUserProfile } = useAuth();
+  const {user, createUser, updateUserProfile } = useAuth();
   const navigate = useNavigate();
   const axiosSecure = useAxiosSecure();
   const [loading, setLoading] = useState(false);

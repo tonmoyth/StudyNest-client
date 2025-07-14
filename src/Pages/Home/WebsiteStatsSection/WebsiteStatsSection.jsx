@@ -20,7 +20,7 @@ const WebsiteStatsSection = () => {
       return res.data;
     },
   });
-  console.log(totalUser)
+ 
 
   // get total classes
   const { data: totalClasses = [] } = useQuery({

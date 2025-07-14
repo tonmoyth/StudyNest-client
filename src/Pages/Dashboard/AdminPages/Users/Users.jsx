@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import useAxiosSecure from "../../../../Hooks/useAxiosSecure";
 import Loading from "../../../../Components/Loading/Loading";
 import Swal from "sweetalert2";
+import ButtonOne from "../../../../Components/ButtonOne/ButtonOne";
 
 const Users = () => {
   const axiosSecure = useAxiosSecure();
@@ -75,9 +76,9 @@ const Users = () => {
 
   return (
     <div className="p-6">
-      <div className="flex justify-between">
-        <h2 className="text-2xl font-bold mb-4">All Users</h2>
-        <div>
+      <div className="flex justify-end mb-4">
+     
+      
           <label className="input">
             <svg
               className="h-[1em] opacity-50"
@@ -102,13 +103,13 @@ const Users = () => {
               placeholder="Search"
             />
           </label>
-        </div>
+       
       </div>
       <div className="overflow-x-auto">
         <table className="table w-full">
           <thead>
-            <tr>
-              <th>#</th>
+            <tr className="bg-[var(--background)]">
+              <th>NO</th>
               <th>User Image</th>
               <th>Name</th>
               <th>Email</th>
@@ -142,16 +143,8 @@ const Users = () => {
                   <td>{user.name}</td>
                   <td>{user.email}</td>
                   <td>
-                    {user.role === "admin" ? (
-                      <span className="text-green-600 font-medium">Admin</span>
-                    ) : (
-                      <button
-                        onClick={() => handleMakeAdmin(user.email)}
-                        className="btn btn-primary btn-sm"
-                      >
-                        Make Admin
-                      </button>
-                    )}
+                   
+                    <ButtonOne onClick={() => handleMakeAdmin(user?.email)} disabled={user.role === "admin"} level={user.role === 'admin' ? 'Already Admin' : 'Make Admin'}></ButtonOne>
                   </td>
                 </tr>
               ))

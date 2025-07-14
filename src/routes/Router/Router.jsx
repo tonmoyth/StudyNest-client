@@ -20,6 +20,7 @@ import Payment from "../../Pages/Payment/Payment";
 import MyEnroll from "../../Pages/Dashboard/StudentPages/MyEnroll";
 import MyEnrolDetails from "../../Pages/Dashboard/StudentPages/MyEnrolDetails";
 import ForbiddenPage from "../../Pages/Forbidden/ForbiddenPage";
+import Dashboard from "../../Pages/Dashboard/DashbaordHome/Dashbaord";
 
 
 export const Router = createBrowserRouter([
@@ -69,6 +70,10 @@ export const Router = createBrowserRouter([
       path: 'dashboard',
       element: <PrivateRoutes><DashboardLayout></DashboardLayout></PrivateRoutes>,
       children: [
+        {
+          index: true,
+          Component:Dashboard
+        },
         {
           path: 'teacher-request',
           Component: TeacherRequest

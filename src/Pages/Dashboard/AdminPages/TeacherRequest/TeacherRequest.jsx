@@ -3,6 +3,7 @@ import useAxiosSecure from "../../../../Hooks/useAxiosSecure";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import Swal from "sweetalert2";
 import Loading from "../../../../Components/Loading/Loading";
+import ButtonOne from "../../../../Components/ButtonOne/ButtonOne";
 
 const TeacherRequest = () => {
   const axiosSecure = useAxiosSecure();
@@ -61,7 +62,7 @@ const TeacherRequest = () => {
       confirmButtonText: "Yes, Reject",
     }).then((result) => {
       if (result.isConfirmed) {
-        rejectedTeacher(email); 
+        rejectedTeacher(email);
       }
     });
   };
@@ -69,12 +70,14 @@ const TeacherRequest = () => {
   if (isLoading) return <Loading></Loading>;
   return (
     <div className="p-6">
-      <h2 className="text-2xl font-bold mb-4">All Teacher Requests</h2>
+      <h2 className="text-2xl lg:text-4xl font-bold mb-4">
+        All Teacher Requests
+      </h2>
       <div className="overflow-x-auto">
         <table className="table w-full">
           <thead>
-            <tr>
-              <th>#</th>
+            <tr className="bg-[var(--background)]">
+              <th>NO</th>
               <th>Image</th>
               <th>Name</th>
               <th>Experience</th>
@@ -112,21 +115,32 @@ const TeacherRequest = () => {
                     {teacher.status}
                   </span>
                 </td>
-                <td className="space-x-2 text-center">
-                  <button
+                <td className="space-x-2 text-center flex gap-4">
+                  <ButtonOne
+                    level="Approve"
+                    disabled={teacher.status === "rejected"}
+                    onClick={() => approveTeacher(teacher.email)}
+                  ></ButtonOne>
+                  {/* <button
                     disabled={teacher.status === "rejected"}
                     onClick={() => approveTeacher(teacher.email)}
                     className="btn btn-sm btn-success"
                   >
                     Approve
-                  </button>
-                  <button
+                  </button> */}
+                  <ButtonOne
+                    level="Reject"
+                    disabled={teacher.status === "rejected"}
+                    onClick={() => handleRejected(teacher.email)}
+                  ></ButtonOne>
+
+                  {/* <button
                     onClick={() => handleRejected(teacher.email)}
                     className="btn btn-sm btn-error"
                     disabled={teacher.status === "rejected"}
                   >
                     Reject
-                  </button>
+                  </button> */}
                 </td>
               </tr>
             ))}

@@ -82,11 +82,11 @@ const AllClasses = () => {
   };
 
   return (
-    <div className="overflow-x-auto mt-8">
+    <div className="overflow-x-auto">
       <table className="table w-full">
         <thead>
-          <tr>
-            <th>#</th>
+          <tr className="bg-[var(--background)]">
+            <th>NO</th>
             <th>Image</th>
             <th>Title</th>
             <th>Email</th>
@@ -123,7 +123,7 @@ const AllClasses = () => {
                 </span>
               </td>
               <td>
-                <div className="flex items-center gap-2 flex-wrap">
+                <div className="flex items-center gap-2 ">
                   <button
                     onClick={() => handleApprove(item._id)}
                     disabled={item.status === "approved"}
@@ -143,7 +143,7 @@ const AllClasses = () => {
                   <button
                     disabled={item.status === "pending"}
                     onClick={() => handleProgress(item._id)}
-                    className="btn btn-xs btn-info"
+                    className="btn btn-xs btn-primary"
                   >
                     Progress
                   </button>

@@ -7,6 +7,7 @@ import Loading from "../../Components/Loading/Loading";
 import useAuth from "../../Hooks/useAuth";
 import Swal from "sweetalert2";
 import { useState } from "react";
+import ButtonOne from "../../Components/ButtonOne/ButtonOne";
 
 const CheckoutForm = () => {
   const stripe = useStripe();
@@ -148,13 +149,13 @@ const CheckoutForm = () => {
     return <p className="bg-red-500">error</p>;
   }
   return (
-    <div className="min-h-screen flex items-center justify-center  px-4">
-      <div className="w-full max-w-md bg-white shadow-lg rounded-xl p-6 space-y-6">
-        <h2 className="text-2xl font-bold text-center text-violet-700">
+    <div className="h-[calc(100vh-65px)] flex items-center justify-center  px-4">
+      <div className="w-full max-w-md bg-[var(--background)] shadow-lg rounded-xl p-6 space-y-6">
+        <h2 className="text-2xl font-bold text-center ">
           Payment
         </h2>
         <form onSubmit={handleSubmit} className="space-y-4">
-          <div className=" p-4 rounded-md shadow-inner bg-gray-50">
+          <div className="p-4 rounded-md shadow-inner ">
             <CardElement
               options={{
                 style: {
@@ -173,7 +174,7 @@ const CheckoutForm = () => {
             />
           </div>
           {/* {cardError && <p className="text-red-500 text-sm">{cardError}</p>} */}
-          <button
+          {/* <button
             type="submit"
             disabled={!stripe || loading}
             className="btn btn-primary w-full py-2 rounded-md"
@@ -183,7 +184,10 @@ const CheckoutForm = () => {
             ) : (
               "Pay Now"
             )}
-          </button>
+          </button> */}
+          <div className="flex justify-center">
+            <ButtonOne level='Pay' loading={loading}  disabled={!stripe}></ButtonOne>
+          </div>
         </form>
       </div>
     </div>
