@@ -5,6 +5,7 @@ import PopularCourses from '../PopularCourses/PopularCourses';
 import WebsiteStatsSection from '../WebsiteStatsSection/WebsiteStatsSection';
 import BecomeTeacherSection from '../BecomeTeacherSection/BecomeTeacherSection';
 import StudentsFeedback from '../StudentsFeedback/StudentsFeedback';
+import BestTeachers from './BestTeachers/BestTeachers';
 
 const Home = () => {
     return (
@@ -15,6 +16,7 @@ const Home = () => {
           <StudentsFeedback></StudentsFeedback>
            <WebsiteStatsSection></WebsiteStatsSection>
            <BecomeTeacherSection></BecomeTeacherSection>
+           <BestTeachers></BestTeachers>
         </div>
     );
 };

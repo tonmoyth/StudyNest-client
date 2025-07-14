@@ -35,6 +35,7 @@ const TerModal = ({ isOpen, close ,classData}) => {
       studentName: user?.displayName,
       studentEmail: user?.email,
       title: classData?.title,
+      classId: classData?._id,
       studentImage: user?.photoURL,
       description,
       rating,

@@ -39,9 +39,6 @@ const WebsiteStatsSection = () => {
     },
   });
 
-  if (isLoading) {
-    return <Loading></Loading>;
-  }
 
   return (
     <section className="py-10 lg:py-12 w-11/12 mx-auto">
@@ -114,7 +111,7 @@ const WebsiteStatsSection = () => {
           <img
             src={educationStateImage} // Replace with your own image path
             alt="Education Stats Illustration"
-            className="max-w-md w-full"
+            className="max-w-2xl w-full"
           />
         </div>
       </div>
