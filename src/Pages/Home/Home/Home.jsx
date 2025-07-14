@@ -6,6 +6,7 @@ import WebsiteStatsSection from '../WebsiteStatsSection/WebsiteStatsSection';
 import BecomeTeacherSection from '../BecomeTeacherSection/BecomeTeacherSection';
 import StudentsFeedback from '../StudentsFeedback/StudentsFeedback';
 import BestTeachers from './BestTeachers/BestTeachers';
+import WhyChooseUs from '../WhyChooseUs/WhyChooseUs';
 
 const Home = () => {
     return (
@@ -17,6 +18,7 @@ const Home = () => {
            <WebsiteStatsSection></WebsiteStatsSection>
            <BecomeTeacherSection></BecomeTeacherSection>
            <BestTeachers></BestTeachers>
+           <WhyChooseUs></WhyChooseUs>
         </div>
     );
 };

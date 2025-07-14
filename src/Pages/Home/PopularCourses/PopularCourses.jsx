@@ -50,7 +50,7 @@ const PopularCourses = () => {
         >
           {topClasses.map((course) => (
             <SwiperSlide key={course.id}>
-              <div className="bg-[var(--secondary)] rounded-xl flex flex-col justify-between p-6 shadow hover:shadow-md transition text-left h-[350px]">
+              <div className="bg-[var(--background)] rounded-xl flex flex-col justify-between p-6 shadow hover:shadow-md transition text-left h-[380px]">
                 <img
                   src={course.image}
                   alt={course.title}

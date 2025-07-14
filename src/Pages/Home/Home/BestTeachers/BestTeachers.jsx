@@ -16,7 +16,7 @@ const BestTeachers = () => {
 
   return (
     <section className="py-10 lg:py-12">
-      <div className="w-11/12 mx-auto">
+      <div className="w-11/12 mx-auto text-[var(--text)]">
         <div className="border-l-4 border-primary pl-4">
           <h2 className="text-2xl lg:text-4xl font-bold mb-2">Best Teachers</h2>
           <p className="mb-8">
@@ -29,7 +29,7 @@ const BestTeachers = () => {
           {topTeachers.map((teacher) => (
             <div
               key={teacher.email}
-              className="relative group bg-[var(--secondary)] rounded-xl p-6 text-center hover:shadow-lg transition duration-300 overflow-hidden"
+              className="relative group bg-[var(--background)] hover:bg-[var(--secondary)] rounded-xl p-6 text-center hover:shadow-lg transition duration-300 overflow-hidden"
             >
               <div className="relative w-24 h-24 mx-auto mb-4">
                 <img
@@ -42,33 +42,33 @@ const BestTeachers = () => {
                   <a
                     href="https://www.facebook.com/"
                     target="_blank"
-                    className="text-white text-sm hover:text-blue-400"
+                    className=" text-sm hover:text-white"
                   >
-                    <FaFacebookF />
+                    <FaFacebookF  className="text-white"/>
                   </a>
-                  <a href="https://x.com/"    target="_blank" className="text-white text-sm hover:text-sky-400">
-                    <FaTwitter />
+                  <a href="https://x.com/"    target="_blank" className=" text-sm hover:text-white">
+                    <FaTwitter className="text-white"/>
                   </a>
                   <a
                     href="https://www.linkedin.com/feed/"
                        target="_blank"
-                    className="text-white text-sm hover:text-blue-600"
+                    className=" text-sm hover:text-white"
                   >
-                    <FaLinkedinIn />
+                    <FaLinkedinIn className="text-white"/>
                   </a>
                 </div>
               </div>
 
-              <h3 className="text-xl font-semibold text-white">
+              <h3 className="text-xl font-semibold ">
                 {teacher.name}
               </h3>
-              <p className="text-sm text-white/80 mb-1 capitalize">
+              <p className="text-sm  mb-1 capitalize">
                 {teacher.category}
               </p>
               {/* <p className="text-sm text-white/80 mb-1">
                 Category: {teacher.category}
               </p> */}
-              <p className="text-sm text-white/70 mb-2 capitalize">
+              <p className="text-sm  mb-2 capitalize">
                 {teacher.experience}
               </p>
 

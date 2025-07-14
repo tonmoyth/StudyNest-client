@@ -5,7 +5,7 @@ import { FaChalkboardTeacher, FaMoneyCheckAlt, FaTools } from "react-icons/fa";
 
 const BecomeTeacherSection = () => {
   return (
-    <section className="py-10 lg:py-12 bg-[var(--secondary)] text-[var(--text)]">
+    <section className="py-10 lg:py-12 bg-[var(--background)] text-[var(--text)]">
       <div className="container mx-auto px-4 flex flex-col-reverse lg:flex-row items-center gap-12">
         {/* Left: Content */}
         <div className="w-full lg:w-1/2">

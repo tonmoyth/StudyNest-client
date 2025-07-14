@@ -43,11 +43,11 @@ const StudentsFeedback = () => {
         >
           {feedbacks.map((item, idx) => (
             <SwiperSlide key={idx}>
-              <div className="text-start bg-[var(--secondary)] space-y-4 shadow-lg flex flex-col justify-between rounded-xl p-6 h-[300px]">
+              <div className="text-start bg-[var(--background)] space-y-4 shadow-lg flex flex-col justify-between rounded-xl p-6 h-[330px]">
                 <p className="text-2xl font-semibold">{item.title}</p>
                 <StarRatings
                   rating={item.rating}
-                  starRatedColor="#4a37b3"
+                  starRatedColor="#5e4cc8"
                   numberOfStars={5}
                   starDimension="34px" 
                   starSpacing="4px"

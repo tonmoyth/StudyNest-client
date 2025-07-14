@@ -20,6 +20,7 @@ const WebsiteStatsSection = () => {
       return res.data;
     },
   });
+  console.log(totalUser)
 
   // get total classes
   const { data: totalClasses = [] } = useQuery({
@@ -51,7 +52,7 @@ const WebsiteStatsSection = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {/* Total Users */}
-            <div className="card bg-[var(--secondary)] shadow-md">
+            <div className="card bg-[var(--background)] ">
               <div className="card-body">
                 <h3 className="card-title text-xl font-semibold">
                   Total Users
@@ -69,7 +70,7 @@ const WebsiteStatsSection = () => {
             </div>
 
             {/* Total Classes */}
-            <div className="card bg-[var(--secondary)] shadow-md">
+            <div className="card bg-[var(--background)] ">
               <div className="card-body">
                 <h3 className="card-title text-xl font-semibold">
                   Total Classes
@@ -87,7 +88,7 @@ const WebsiteStatsSection = () => {
             </div>
 
             {/* Total Enrollments */}
-            <div className="card bg-[var(--secondary)] shadow-md">
+            <div className="card bg-[var(--background)] ">
               <div className="card-body">
                 <h3 className="card-title text-xl font-semibold">
                   Total Enrollments
