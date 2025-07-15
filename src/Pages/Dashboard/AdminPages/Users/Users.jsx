@@ -71,8 +71,6 @@ const Users = () => {
 
   if (isUsersLoading) return <Loading></Loading>;
 
-  if (isError)
-    return <p className="text-center text-red-500">Failed to load users.</p>;
 
   return (
     <div className="p-6">

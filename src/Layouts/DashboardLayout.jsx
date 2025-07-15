@@ -262,7 +262,7 @@ const DashboardLayout = () => {
         <ul className="menu bg-[var(--background)] text-base-content min-h-full w-80 p-4">
           <div className="flex gap-4 items-center mb-4">
             <div className="avatar">
-              <div className="ring-primary ring-offset-base-100 w-16 rounded-full ring-2 ring-offset-2">
+              <div className="ring-primary ring-offset-base-100 w-12 rounded-full ring-2 ring-offset-2">
                 <Link to="/">
                   <img src={user?.photoURL} />
                 </Link>

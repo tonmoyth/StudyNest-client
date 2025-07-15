@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import useAxiosSecure from "../../../../Hooks/useAxiosSecure";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import Swal from "sweetalert2";
@@ -7,19 +7,23 @@ import ButtonOne from "../../../../Components/ButtonOne/ButtonOne";
 
 const TeacherRequest = () => {
   const axiosSecure = useAxiosSecure();
-
+   const [currentPage, setCurrentPage] = useState(1);
+  
+  
   const {
     data: teachers = [],
     isLoading,
     isError,
     refetch,
   } = useQuery({
-    queryKey: ["all-teachers"],
+    queryKey: ["all-teachers", currentPage],
     queryFn: async () => {
-      const res = await axiosSecure.get("/teachers");
+      const res = await axiosSecure.get(`/teachers?page=${currentPage}`);
       return res.data;
     },
   });
+
+
 
   //   teacher accept
   const { mutate: approveTeacher } = useMutation({
@@ -69,11 +73,11 @@ const TeacherRequest = () => {
 
   if (isLoading) return <Loading></Loading>;
   return (
-    <div className="p-6">
+    <div className="p-6 ">
       <h2 className="text-2xl lg:text-4xl font-bold mb-4">
         All Teacher Requests
       </h2>
-      <div className="overflow-x-auto">
+      <div className="overflow-x-auto min-h-[calc(100vh-130px)]">
         <table className="table w-full">
           <thead>
             <tr className="bg-[var(--background)]">
@@ -88,7 +92,7 @@ const TeacherRequest = () => {
             </tr>
           </thead>
           <tbody>
-            {teachers.map((teacher, index) => (
+            {teachers?.data?.map((teacher, index) => (
               <tr key={teacher._id}>
                 <td>{index + 1}</td>
                 <td>
@@ -146,6 +150,39 @@ const TeacherRequest = () => {
             ))}
           </tbody>
         </table>
+      </div>
+
+        {/* pagination */}
+      <div className="flex justify-center items-center gap-2 mt-4">
+        <button
+          onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+          className="btn btn-sm"
+          disabled={currentPage === 1}
+        >
+          Prev
+        </button>
+
+        {[...Array(teachers.totalPages)].map((_, index) => (
+          <button
+            key={index}
+            onClick={() => setCurrentPage(index + 1)}
+            className={`btn btn-sm ${
+              currentPage === index + 1 ? "bg-primary text-white" : ""
+            }`}
+          >
+            {index + 1}
+          </button>
+        ))}
+
+        <button
+          onClick={() =>
+            setCurrentPage((prev) => Math.min(prev + 1, teachers.totalPages))
+          }
+          className="btn btn-sm"
+          disabled={currentPage === teachers.totalPages}
+        >
+          Next
+        </button>
       </div>
     </div>
   );
