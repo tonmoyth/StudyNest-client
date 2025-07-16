@@ -14,6 +14,7 @@ const AddClass = () => {
   const axiosSecure = useAxiosSecure();
   const navigate = useNavigate();
 
+
   const {
     register,
     handleSubmit,

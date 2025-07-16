@@ -4,10 +4,12 @@ import useAxiosSecure from "../../../../Hooks/useAxiosSecure";
 import Loading from "../../../../Components/Loading/Loading";
 import Swal from "sweetalert2";
 import ButtonOne from "../../../../Components/ButtonOne/ButtonOne";
+import Pagination from "../../../../Components/pagination/Pagination";
 
 const Users = () => {
   const axiosSecure = useAxiosSecure();
   const [search, setSearch] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
 
   //   search
   const { data: searchResults = [], isLoading: isSearchLoading } = useQuery({
@@ -26,18 +28,19 @@ const Users = () => {
     refetch,
     isError,
   } = useQuery({
-    queryKey: ["all-users"],
+    queryKey: ["all-users", currentPage],
     queryFn: async () => {
-      const res = await axiosSecure.get("/users");
+      const res = await axiosSecure.get(`/users?page=${currentPage}`);
       return res.data;
     },
   });
 
-  const displayedUsers = Array.isArray(search ? searchResults : users)
+  const displayedUsers = Array.isArray(search ? searchResults : users?.data)
     ? search
       ? searchResults
-      : users
+      : users?.data
     : [];
+
   //   user role admin set
   const { mutate: makeAdmin } = useMutation({
     mutationFn: async (email) => {
@@ -71,37 +74,33 @@ const Users = () => {
 
   if (isUsersLoading) return <Loading></Loading>;
 
-
   return (
     <div className="p-6">
       <div className="flex justify-end mb-4">
-     
-      
-          <label className="input">
-            <svg
-              className="h-[1em] opacity-50"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
+        <label className="input">
+          <svg
+            className="h-[1em] opacity-50"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+          >
+            <g
+              strokeLinejoin="round"
+              strokeLinecap="round"
+              strokeWidth="2.5"
+              fill="none"
+              stroke="currentColor"
             >
-              <g
-                strokeLinejoin="round"
-                strokeLinecap="round"
-                strokeWidth="2.5"
-                fill="none"
-                stroke="currentColor"
-              >
-                <circle cx="11" cy="11" r="8"></circle>
-                <path d="m21 21-4.3-4.3"></path>
-              </g>
-            </svg>
-            <input
-              onChange={(e) => setSearch(e.target.value)}
-              type="search"
-              className="grow"
-              placeholder="Search"
-            />
-          </label>
-       
+              <circle cx="11" cy="11" r="8"></circle>
+              <path d="m21 21-4.3-4.3"></path>
+            </g>
+          </svg>
+          <input
+            onChange={(e) => setSearch(e.target.value)}
+            type="search"
+            className="grow"
+            placeholder="Search"
+          />
+        </label>
       </div>
       <div className="overflow-x-auto">
         <table className="table w-full">
@@ -141,8 +140,13 @@ const Users = () => {
                   <td>{user.name}</td>
                   <td>{user.email}</td>
                   <td>
-                   
-                    <ButtonOne onClick={() => handleMakeAdmin(user?.email)} disabled={user.role === "admin"} level={user.role === 'admin' ? 'Already Admin' : 'Make Admin'}></ButtonOne>
+                    <ButtonOne
+                      onClick={() => handleMakeAdmin(user?.email)}
+                      disabled={user.role === "admin"}
+                      level={
+                        user.role === "admin" ? "Already Admin" : "Make Admin"
+                      }
+                    ></ButtonOne>
                   </td>
                 </tr>
               ))
@@ -150,6 +154,13 @@ const Users = () => {
           </tbody>
         </table>
       </div>
+
+      {/* pagination */}
+      <Pagination
+        data={users}
+        setCurrentPage={setCurrentPage}
+        currentPage={currentPage}
+      ></Pagination>
     </div>
   );
 };

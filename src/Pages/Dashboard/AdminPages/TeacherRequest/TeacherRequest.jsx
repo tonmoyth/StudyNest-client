@@ -4,12 +4,12 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import Swal from "sweetalert2";
 import Loading from "../../../../Components/Loading/Loading";
 import ButtonOne from "../../../../Components/ButtonOne/ButtonOne";
+import Pagination from "../../../../Components/pagination/Pagination";
 
 const TeacherRequest = () => {
   const axiosSecure = useAxiosSecure();
-   const [currentPage, setCurrentPage] = useState(1);
-  
-  
+  const [currentPage, setCurrentPage] = useState(1);
+
   const {
     data: teachers = [],
     isLoading,
@@ -22,8 +22,7 @@ const TeacherRequest = () => {
       return res.data;
     },
   });
-
-
+  
 
   //   teacher accept
   const { mutate: approveTeacher } = useMutation({
@@ -152,38 +151,12 @@ const TeacherRequest = () => {
         </table>
       </div>
 
-        {/* pagination */}
-      <div className="flex justify-center items-center gap-2 mt-4">
-        <button
-          onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-          className="btn btn-sm"
-          disabled={currentPage === 1}
-        >
-          Prev
-        </button>
-
-        {[...Array(teachers.totalPages)].map((_, index) => (
-          <button
-            key={index}
-            onClick={() => setCurrentPage(index + 1)}
-            className={`btn btn-sm ${
-              currentPage === index + 1 ? "bg-primary text-white" : ""
-            }`}
-          >
-            {index + 1}
-          </button>
-        ))}
-
-        <button
-          onClick={() =>
-            setCurrentPage((prev) => Math.min(prev + 1, teachers.totalPages))
-          }
-          className="btn btn-sm"
-          disabled={currentPage === teachers.totalPages}
-        >
-          Next
-        </button>
-      </div>
+      {/* pagination */}
+      <Pagination
+        setCurrentPage={setCurrentPage}
+        currentPage={currentPage}
+        data={teachers}
+      ></Pagination>
     </div>
   );
 };

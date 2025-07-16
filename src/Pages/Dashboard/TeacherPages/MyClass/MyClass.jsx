@@ -6,6 +6,7 @@ import { Link, useNavigate } from "react-router";
 import { Button } from "@headlessui/react";
 import ClassUpdateModal from "./ClassUpdateModal";
 import Swal from "sweetalert2";
+import Pagination from "../../../../Components/pagination/Pagination";
 
 const MyClass = () => {
   const { user } = useAuth();
@@ -13,16 +14,19 @@ const MyClass = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectClass, setSelectClass] = useState(null);
   const navigate = useNavigate();
+  const [currentPage, setCurrentPage] = useState(1);
 
   const {
     data: myClasses = [],
     isLoading,
     refetch,
   } = useQuery({
-    queryKey: ["my-classes", user?.email],
+    queryKey: ["my-classes", user?.email, currentPage],
     enabled: !!user?.email,
     queryFn: async () => {
-      const res = await axiosSecure.get(`/classes?email=${user.email}`);
+      const res = await axiosSecure.get(
+        `/classes?email=${user.email}&page=${currentPage}`
+      );
       return res.data;
     },
   });
@@ -68,8 +72,8 @@ const MyClass = () => {
   };
 
   const handleSeeDetails = (id) => {
-    navigate(`/dashboard/my-class/${id}`)
-  }
+    navigate(`/dashboard/my-class/${id}`);
+  };
 
   if (isLoading) return <p className="text-center">Loading...</p>;
 
@@ -80,76 +84,85 @@ const MyClass = () => {
       </p>
     );
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-4">
-      {myClasses.map((classItem) => (
-        <div
-          key={classItem._id}
-          className="border p-4 rounded shadow bg-white space-y-3"
-        >
-          <img
-            src={classItem.image}
-            alt={classItem.title}
-            className="w-full h-48 object-cover rounded"
+    <div>
+      <div className="min-h-screen">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-4 ">
+          {myClasses?.classes?.map((classItem) => (
+            <div
+              key={classItem._id}
+              className="border p-4 rounded shadow bg-white space-y-3"
+            >
+              <img
+                src={classItem.image}
+                alt={classItem.title}
+                className="w-full h-48 object-cover rounded"
+              />
+              <h2 className="text-xl font-semibold">{classItem.title}</h2>
+              <p>
+                <strong>Teacher:</strong> {classItem.name}
+              </p>
+              <p>
+                <strong>Email:</strong> {classItem.email}
+              </p>
+              <p>
+                <strong>Price:</strong> ${classItem.price}
+              </p>
+              <p>
+                <strong>Description:</strong> {classItem.description}
+              </p>
+              <p>
+                <strong>Status:</strong>{" "}
+                <span
+                  className={`font-medium ${
+                    classItem.status === "pending"
+                      ? "text-yellow-500"
+                      : classItem.status === "approved"
+                      ? "text-green-600"
+                      : "text-red-500"
+                  }`}
+                >
+                  {classItem.status}
+                </span>
+              </p>
+
+              <div className="flex justify-between mt-3">
+                <Button
+                  onClick={() => open(classItem)}
+                  className="rounded-md bg-black/20 px-4 py-2 text-sm font-medium text-white focus:not-data-focus:outline-none data-focus:outline data-focus:outline-white data-hover:bg-black/30"
+                >
+                  Update
+                </Button>
+                <button
+                  onClick={() => handleSeeDetails(classItem._id)}
+                  className="btn btn-sm btn-secondary"
+                  disabled={classItem.status === "pending"}
+                >
+                  See Details
+                </button>
+                <button
+                  onClick={() => handleDelete(classItem._id)}
+                  className="btn btn-sm btn-error"
+                >
+                  Delete
+                </button>
+              </div>
+            </div>
+          ))}
+
+          <ClassUpdateModal
+            isOpen={isOpen}
+            close={close}
+            classData={selectClass}
+            refetch={refetch}
           />
-          <h2 className="text-xl font-semibold">{classItem.title}</h2>
-          <p>
-            <strong>Teacher:</strong> {classItem.name}
-          </p>
-          <p>
-            <strong>Email:</strong> {classItem.email}
-          </p>
-          <p>
-            <strong>Price:</strong> ${classItem.price}
-          </p>
-          <p>
-            <strong>Description:</strong> {classItem.description}
-          </p>
-          <p>
-            <strong>Status:</strong>{" "}
-            <span
-              className={`font-medium ${
-                classItem.status === "pending"
-                  ? "text-yellow-500"
-                  : classItem.status === "approved"
-                  ? "text-green-600"
-                  : "text-red-500"
-              }`}
-            >
-              {classItem.status}
-            </span>
-          </p>
-
-          <div className="flex justify-between mt-3">
-            <Button
-              onClick={() => open(classItem)}
-              className="rounded-md bg-black/20 px-4 py-2 text-sm font-medium text-white focus:not-data-focus:outline-none data-focus:outline data-focus:outline-white data-hover:bg-black/30"
-            >
-              Update
-            </Button>
-            <button
-            
-            onClick={() => handleSeeDetails(classItem._id)}
-              className="btn btn-sm btn-secondary"
-              disabled={classItem.status === "pending"}
-            >
-              See Details
-            </button>
-            <button
-              onClick={() => handleDelete(classItem._id)}
-              className="btn btn-sm btn-error"
-            >
-              Delete
-            </button>
-          </div>
         </div>
-      ))}
-
-      <ClassUpdateModal
-        isOpen={isOpen}
-        close={close}
-        classData={selectClass}
-        refetch={refetch}
-      />
+      </div>
+      {/* pagination */}
+      <Pagination
+        data={myClasses}
+        setCurrentPage={setCurrentPage}
+        currentPage={currentPage}
+      ></Pagination>
     </div>
   );
 };
