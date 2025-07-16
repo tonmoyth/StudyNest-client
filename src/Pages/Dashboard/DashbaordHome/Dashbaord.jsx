@@ -8,10 +8,15 @@ import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from "recharts";
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 import Loading from "../../../Components/Loading/Loading";
+import useAuth from "../../../Hooks/useAuth";
+import useUserRole from "../../../Hooks/useUserRole";
 
 const Dashboard = () => {
   const axiosSecure = useAxiosSecure();
+  const { user } = useAuth();
+  const {role} = useUserRole()
 
+  // admin
   // get total classes
   const { data: totalClasses = [] } = useQuery({
     queryKey: ["totalClasses"],
@@ -20,7 +25,6 @@ const Dashboard = () => {
       return res.data;
     },
   });
-
   // get total users
   const { data: totalUser = [], isLoading } = useQuery({
     queryKey: ["totalUser"],
@@ -29,7 +33,6 @@ const Dashboard = () => {
       return res.data;
     },
   });
-
   const { data: totalStudents = [] } = useQuery({
     queryKey: ["totalStudents"],
     queryFn: async () => {
@@ -45,12 +48,50 @@ const Dashboard = () => {
     },
   });
 
+  // teacher
+  // total class
+  const { data: teacherClasses = [] } = useQuery({
+    queryKey: ["teacher-classes"],
+    queryFn: async () => {
+      const res = await axiosSecure.get(`/classes?email=${user?.email}`);
+      return res.data;
+    },
+  });
+
+  // get total enrolment
+  const { data: teacherTotalEnrollments = [] } = useQuery({
+    queryKey: ["teacherTotalEnrollments"],
+    queryFn: async () => {
+      const res = await axiosSecure.get(
+        `/teachers_enrollments_total?email=${user?.email}`
+      );
+      return res.data;
+    },
+  });
+
+  // get totol assignment for techer
+  const { data: totalAssignment = [] } = useQuery({
+    queryKey: ["total-assignment"],
+    queryFn: async () => {
+      const res = await axiosSecure.get(
+        `/assignments_total?email=${user?.email}`
+      );
+      return res.data;
+    },
+  });
+
   const pieData = [
     { name: "Students", value: totalStudents.totalStudents || 0 },
     { name: "Teachers", value: totalTeachers.totalTeachers || 0 },
     { name: "Users", value: totalUser.totalUser || 0 },
     { name: "Classes", value: totalClasses.totalClasses || 0 },
   ];
+
+  const teacherData = [
+    {name: 'classes', value: teacherClasses.totalItems || 0},
+    {name: 'enrollments', value: teacherTotalEnrollments.totalEnrollments || 0},
+    {name: 'assignments', value: totalAssignment.totalAssignments || 0},
+  ]
 
   if (isLoading) {
     return <Loading></Loading>;
@@ -63,51 +104,77 @@ const Dashboard = () => {
         <FaClipboardList className="text-3xl" />
         <div>
           <p className="text-sm">Total Classes</p>
-          <h2 className="text-2xl font-bold">{totalClasses.totalClasses}</h2>
+          <h2 className="text-2xl font-bold">
+            {role === "admin"
+              ? totalClasses.totalClasses
+              : teacherClasses.totalItems}
+          </h2>
         </div>
       </div>
 
       <div className="bg-[var(--secondary)] text-white p-6 rounded-xl shadow-md flex items-center gap-4">
         <FaUsers className="text-3xl" />
         <div>
-          <p className="text-sm">Total Users</p>
-          <h2 className="text-2xl font-bold">{totalUser.totalUsers}</h2>
+          <p className="text-sm">
+            {role === "admin" ? "Total Users" : "Total Enrollments"}
+          </p>
+          <h2 className="text-2xl font-bold">
+            {role === "admin"
+              ? totalUser.totalUsers
+              : teacherTotalEnrollments.totalEnrollments}
+          </h2>
         </div>
       </div>
 
       <div className="bg-[var(--accent)] text-white p-6 rounded-xl shadow-md flex items-center gap-4">
         <FaUserGraduate className="text-3xl" />
         <div>
-          <p className="text-sm">Total Students</p>
-          <h2 className="text-2xl font-bold">{totalStudents.totalStudents}</h2>
+          <p className="text-sm">
+            {role === "admin" ? "Total Students" : "Total assignments"}
+          </p>
+          <h2 className="text-2xl font-bold">
+            {role === "admin"
+              ? totalStudents.totalStudents
+              : totalAssignment.totalAssignments}
+          </h2>
         </div>
       </div>
 
-      <div className="bg-[var(--primary)] text-white p-6 rounded-xl shadow-md flex items-center gap-4">
-        <FaChalkboardTeacher className="text-3xl" />
-        <div>
-          <p className="text-sm">Total Teachers</p>
-          <h2 className="text-2xl font-bold">{totalTeachers.totalTeachers}</h2>
-        </div>
-      </div>
+      {role === "admin" && (
+        <>
+          <div className="bg-[var(--primary)] text-white p-6 rounded-xl shadow-md flex items-center gap-4">
+            <FaChalkboardTeacher className="text-3xl" />
+            <div>
+              <p className="text-sm">Total Teachers</p>
+              <h2 className="text-2xl font-bold">
+                {totalTeachers.totalTeachers}
+              </h2>
+            </div>
+          </div>
+        </>
+      )}
 
-     
-       {/* Chart */}
+      {/* Chart */}
       <div className="col-span-1 md:col-span-2 lg:col-span-4 bg-[var(--background)] dark:bg-[var(--background)] rounded-xl  p-4">
         <ResponsiveContainer width="100%" height={250}>
           <PieChart>
             <Pie
-              data={pieData}
+              data={role === 'admin' ? pieData : teacherData}
               cx="50%"
               cy="50%"
               labelLine={false}
               outerRadius={100}
               fill="#8884d8"
               dataKey="value"
-              label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
+              label={({ name, percent }) =>
+                `${name}: ${(percent * 100).toFixed(0)}%`
+              }
             >
               {pieData.map((entry, index) => (
-                <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                <Cell
+                  key={`cell-${index}`}
+                  fill={COLORS[index % COLORS.length]}
+                />
               ))}
             </Pie>
             <Tooltip />

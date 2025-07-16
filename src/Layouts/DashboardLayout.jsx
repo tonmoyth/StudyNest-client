@@ -15,6 +15,7 @@ import useAxiosSecure from "../Hooks/useAxiosSecure";
 import useAuth from "../Hooks/useAuth";
 import Loading from "../Components/Loading/Loading";
 import { FiGrid } from "react-icons/fi";
+import logo from '../assets/education-logo.png'
 
 const DashboardLayout = () => {
   const { role, isRoleLoading, refetchRole } = useUserRole();
@@ -260,17 +261,25 @@ const DashboardLayout = () => {
         ></label>
 
         <ul className="menu bg-[var(--background)] text-base-content min-h-full w-80 p-4">
-          <div className="flex gap-4 items-center mb-4">
-            <div className="avatar">
+          <div className="flex gap-4 items-center mb-2">
+            <Link to="/" className="flex items-center gap-2 text-xl font-bold">
+              <img
+                src={logo}
+                alt="EduManage Logo"
+                className="w-10 h-10 lg:w-12 lg:h-12"
+              />
+              StudyNest
+            </Link>
+            {/* <div className="avatar">
               <div className="ring-primary ring-offset-base-100 w-12 rounded-full ring-2 ring-offset-2">
                 <Link to="/">
                   <img src={user?.photoURL} />
                 </Link>
               </div>
-            </div>
-            <div>
+            </div> */}
+            {/* <div>
               <h1 className="text-xl font-semibold">{user?.displayName}</h1>
-            </div>
+            </div> */}
           </div>
           {/* Sidebar content here */}
           {links}

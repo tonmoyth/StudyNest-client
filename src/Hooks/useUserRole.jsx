@@ -22,7 +22,6 @@ const useUserRole = () => {
 
 
   return {
- 
     role: userProfile.role,
     isRoleLoading: isLoading,
     refetchRole: refetch,

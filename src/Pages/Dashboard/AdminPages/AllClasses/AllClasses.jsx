@@ -11,11 +11,9 @@ const AllClasses = () => {
   const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(1);
 
-  console.log(currentPage);
   const {
     data: classes = [],
     isLoading,
-
     refetch,
   } = useQuery({
     queryKey: ["all-classes", currentPage],

@@ -8,11 +8,12 @@ import { useMutation } from "@tanstack/react-query";
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 
 const Register = () => {
-  const {user, createUser, updateUserProfile } = useAuth();
+  const {user, createUser,loading: userLoading, updateUserProfile } = useAuth();
   const navigate = useNavigate();
   const axiosSecure = useAxiosSecure();
   const [loading, setLoading] = useState(false);
   const { state } = useLocation();
+
 
   const {
     register,
@@ -66,7 +67,11 @@ const Register = () => {
               createdAt: new Date().toISOString(),
               last_login: new Date().toISOString(),
             };
+            // if(!userLoading){
+
+            // }
             saveInfo(userInfo);
+            
           })
           .catch(() => {
             Swal.fire({

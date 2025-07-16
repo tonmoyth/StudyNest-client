@@ -10,8 +10,8 @@ const GoogleLogin = () => {
   const navigate = useNavigate();
   const axiosSecure = useAxiosSecure();
   const {state} = useLocation();
-  
-console.log('axiosSecure:', axiosSecure);
+  const redirect = state ? state : '/'
+
   const { mutate: saveGoogleUser } = useMutation({
     mutationFn: async (userData) => {
       const res = await axiosSecure.post("/users", userData);
@@ -50,10 +50,8 @@ console.log('axiosSecure:', axiosSecure);
           createdAt: new Date().toISOString(),
           last_login: new Date().toISOString()
         }
-        console.log(userInfo)
         saveGoogleUser(userInfo);
-
-        navigate("/");
+        navigate(redirect)
       })
       .catch((error) => {
         Swal.fire({
