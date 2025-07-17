@@ -6,6 +6,7 @@ import Swal from "sweetalert2";
 import { useMutation } from "@tanstack/react-query";
 import useAxiosSecure from "../../../../Hooks/useAxiosSecure";
 import { useNavigate } from "react-router";
+import ButtonOne from "../../../../Components/ButtonOne/ButtonOne";
 
 const AddClass = () => {
   const { user } = useAuth();
@@ -13,7 +14,6 @@ const AddClass = () => {
   const [isImageUploading, setIsImageUploading] = useState(false);
   const axiosSecure = useAxiosSecure();
   const navigate = useNavigate();
-
 
   const {
     register,
@@ -34,7 +34,7 @@ const AddClass = () => {
         showConfirmButton: false,
         timer: 1500,
       });
-      navigate('/dashboard/my-classes')
+      navigate("/dashboard/my-classes");
       reset();
     },
     onError: () => {
@@ -90,7 +90,7 @@ const AddClass = () => {
   };
 
   return (
-    <div className="w-11/12 mx-auto p-6 bg-white shadow rounded">
+    <div className="lg:w-11/12 mx-auto p-6 shadow rounded">
       <h2 className="text-2xl font-bold mb-6 text-center">Add a Class</h2>
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-2">
         {/* Title */}
@@ -175,9 +175,9 @@ const AddClass = () => {
         </div>
 
         {/* Submit */}
-        <button type="submit" className="btn btn-primary w-full">
-          {isPending ? <span className="loading loading-spinner loading-md"></span> : 'Add Class'}Add Class
-        </button>
+        <div className="flex justify-center py-2">
+          <ButtonOne loading={isPending} level="Add Class"></ButtonOne>
+        </div>
       </form>
     </div>
   );

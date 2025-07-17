@@ -14,7 +14,7 @@ import useUserRole from "../../../Hooks/useUserRole";
 const Dashboard = () => {
   const axiosSecure = useAxiosSecure();
   const { user } = useAuth();
-  const {role} = useUserRole()
+  const { role } = useUserRole();
 
   // admin
   // get total classes
@@ -80,6 +80,28 @@ const Dashboard = () => {
     },
   });
 
+  // student
+  const { data: totalEnrolledClasses = [] } = useQuery({
+    queryKey: ["total-enrolled-classes", user?.email],
+    enabled: !!user?.email,
+    queryFn: async () => {
+      const res = await axiosSecure.get(
+        `/enrolled-classes?email=${user?.email}`
+      );
+      return res.data;
+    },
+  });
+
+  const { data: totalStudentAssignment = [] } = useQuery({
+    queryKey: ["total-student-assignment"],
+    queryFn: async () => {
+      const res = await axiosSecure.get(
+        `/assignments_student_total?email=${user?.email}`
+      );
+      return res.data;
+    },
+  });
+
   const pieData = [
     { name: "Students", value: totalStudents.totalStudents || 0 },
     { name: "Teachers", value: totalTeachers.totalTeachers || 0 },
@@ -88,10 +110,24 @@ const Dashboard = () => {
   ];
 
   const teacherData = [
-    {name: 'classes', value: teacherClasses.totalItems || 0},
-    {name: 'enrollments', value: teacherTotalEnrollments.totalEnrollments || 0},
-    {name: 'assignments', value: totalAssignment.totalAssignments || 0},
-  ]
+    { name: "classes", value: teacherClasses.totalItems || 0 },
+    {
+      name: "enrollments",
+      value: teacherTotalEnrollments.totalEnrollments || 0,
+    },
+    { name: "assignments", value: totalAssignment.totalAssignments || 0 },
+  ];
+  const studentData = [
+    {
+      name: "total Enrollments classes",
+      value: totalEnrolledClasses?.data?.length || 0,
+    },
+    {
+      name: "total Assignments",
+      value: totalStudentAssignment?.totalAssignments || 0,
+    },
+  ];
+
 
   if (isLoading) {
     return <Loading></Loading>;
@@ -103,11 +139,19 @@ const Dashboard = () => {
       <div className="bg-[var(--primary)] text-white p-6 rounded-xl shadow-md flex items-center gap-4">
         <FaClipboardList className="text-3xl" />
         <div>
-          <p className="text-sm">Total Classes</p>
+          <p className="text-sm">
+            {role === "admin"
+              ? "Total Classes"
+              : role === "teacher"
+              ? "Total Classes"
+              : "Total Enrollments Classes"}
+          </p>
           <h2 className="text-2xl font-bold">
             {role === "admin"
               ? totalClasses.totalClasses
-              : teacherClasses.totalItems}
+              : role === "teacher"
+              ? teacherClasses.totalItems
+              : totalEnrolledClasses?.data?.length}
           </h2>
         </div>
       </div>
@@ -116,29 +160,39 @@ const Dashboard = () => {
         <FaUsers className="text-3xl" />
         <div>
           <p className="text-sm">
-            {role === "admin" ? "Total Users" : "Total Enrollments"}
+            {role === "admin"
+              ? "Total Users"
+              : role === "teacher"
+              ? "Total Enrollments"
+              : "Total Assignments"}
           </p>
           <h2 className="text-2xl font-bold">
             {role === "admin"
-              ? totalUser.totalUsers
-              : teacherTotalEnrollments.totalEnrollments}
+              ? totalUser?.totalUsers
+              : role === "teacher"
+              ? teacherTotalEnrollments?.totalEnrollments
+              : totalStudentAssignment?.totalAssignments}
           </h2>
         </div>
       </div>
 
-      <div className="bg-[var(--accent)] text-white p-6 rounded-xl shadow-md flex items-center gap-4">
-        <FaUserGraduate className="text-3xl" />
-        <div>
-          <p className="text-sm">
-            {role === "admin" ? "Total Students" : "Total assignments"}
-          </p>
-          <h2 className="text-2xl font-bold">
-            {role === "admin"
-              ? totalStudents.totalStudents
-              : totalAssignment.totalAssignments}
-          </h2>
+      {role === "student" || role === 'user' ? (
+        " "
+      ) : (
+        <div className="bg-[var(--accent)] text-white p-6 rounded-xl shadow-md flex items-center gap-4">
+          <FaUserGraduate className="text-3xl" />
+          <div>
+            <p className="text-sm">
+              {role === "admin" ? "Total Students" : "Total assignments"}
+            </p>
+            <h2 className="text-2xl font-bold">
+              {role === "admin"
+                ? totalStudents.totalStudents
+                : totalAssignment.totalAssignments}
+            </h2>
+          </div>
         </div>
-      </div>
+      )}
 
       {role === "admin" && (
         <>
@@ -159,7 +213,13 @@ const Dashboard = () => {
         <ResponsiveContainer width="100%" height={250}>
           <PieChart>
             <Pie
-              data={role === 'admin' ? pieData : teacherData}
+              data={
+                role === "admin"
+                  ? pieData
+                  : role === "teacher"
+                  ? teacherData
+                  : studentData 
+              }
               cx="50%"
               cy="50%"
               labelLine={false}

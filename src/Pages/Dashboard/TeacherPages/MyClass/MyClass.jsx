@@ -7,6 +7,7 @@ import { Button } from "@headlessui/react";
 import ClassUpdateModal from "./ClassUpdateModal";
 import Swal from "sweetalert2";
 import Pagination from "../../../../Components/pagination/Pagination";
+import ButtonOne from "../../../../Components/ButtonOne/ButtonOne";
 
 const MyClass = () => {
   const { user } = useAuth();
@@ -90,7 +91,7 @@ const MyClass = () => {
           {myClasses?.classes?.map((classItem) => (
             <div
               key={classItem._id}
-              className="border p-4 rounded shadow bg-white space-y-3"
+              className="p-4 rounded bg-[var(--background)] flex flex-col justify-between space-y-2 h-[530px]"
             >
               <img
                 src={classItem.image}
@@ -99,25 +100,25 @@ const MyClass = () => {
               />
               <h2 className="text-xl font-semibold">{classItem.title}</h2>
               <p>
-                <strong>Teacher:</strong> {classItem.name}
+                <strong>Teacher</strong> {classItem.name}
               </p>
               <p>
-                <strong>Email:</strong> {classItem.email}
+                <strong>Email</strong> {classItem.email}
               </p>
               <p>
-                <strong>Price:</strong> ${classItem.price}
+                <strong>Price</strong> ${classItem.price}
               </p>
               <p>
-                <strong>Description:</strong> {classItem.description}
+                {classItem.description}
               </p>
               <p>
-                <strong>Status:</strong>{" "}
+                <strong></strong>{" "}
                 <span
                   className={`font-medium ${
                     classItem.status === "pending"
                       ? "text-yellow-500"
                       : classItem.status === "approved"
-                      ? "text-green-600"
+                      ? "text-primary"
                       : "text-red-500"
                   }`}
                 >
@@ -126,25 +127,9 @@ const MyClass = () => {
               </p>
 
               <div className="flex justify-between mt-3">
-                <Button
-                  onClick={() => open(classItem)}
-                  className="rounded-md bg-black/20 px-4 py-2 text-sm font-medium text-white focus:not-data-focus:outline-none data-focus:outline data-focus:outline-white data-hover:bg-black/30"
-                >
-                  Update
-                </Button>
-                <button
-                  onClick={() => handleSeeDetails(classItem._id)}
-                  className="btn btn-sm btn-secondary"
-                  disabled={classItem.status === "pending"}
-                >
-                  See Details
-                </button>
-                <button
-                  onClick={() => handleDelete(classItem._id)}
-                  className="btn btn-sm btn-error"
-                >
-                  Delete
-                </button>
+                <ButtonOne onClick={() => open(classItem)} level="Update"></ButtonOne>
+                <ButtonOne disabled={classItem.status === "pending"}  onClick={() => handleSeeDetails(classItem._id)}  level="See Details"></ButtonOne>
+                <ButtonOne onClick={() => handleDelete(classItem._id)} level="Delete"></ButtonOne>
               </div>
             </div>
           ))}

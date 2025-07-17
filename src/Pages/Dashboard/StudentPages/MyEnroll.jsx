@@ -5,6 +5,7 @@ import useAuth from "../../../Hooks/useAuth";
 import EnrolledClassCard from "./EnrolledClassCard";
 import { useNavigate } from "react-router";
 import Pagination from "../../../Components/pagination/Pagination";
+import Loading from "../../../Components/Loading/Loading";
 
 const MyEnroll = () => {
   const axiosSecure = useAxiosSecure();
@@ -14,10 +15,7 @@ const MyEnroll = () => {
 
   const {
     data: enrolledClasses = [],
-    isLoading,
-    isError,
-    error,
-    refetch,
+    isLoading
   } = useQuery({
     queryKey: ["enrolled-classes", user?.email, currentPage],
     enabled: !!user?.email,
@@ -33,12 +31,15 @@ const MyEnroll = () => {
     navigate(`/dashboard/myEnroll-class/${classItem._id}`);
   };
 
+  if(isLoading){
+    return <Loading></Loading>
+  }
   return (
-    <div className="p-6 min-h-screen bg-gray-50">
+    <div className="p-6 min-h-screen">
       <h1 className="text-2xl font-bold mb-6">Enrolled Classes</h1>
 
       {enrolledClasses?.data?.length === 0 ? (
-        <p className="text-gray-500 text-center">No enrolled classes found.</p>
+        <p className="text-center">No enrolled classes found.</p>
       ) : (
         <div className="min-h-screen">
           <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">

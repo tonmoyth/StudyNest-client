@@ -6,13 +6,13 @@ import { useMutation } from "@tanstack/react-query";
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 import Swal from "sweetalert2";
 
-const TerModal = ({ isOpen, close ,classData}) => {
+const TerModal = ({ isOpen, close, classData }) => {
   const [description, setDescription] = useState("");
   const [rating, setRating] = useState(0);
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
 
-  const { mutate: handleFeedback ,isPending} = useMutation({
+  const { mutate: handleFeedback, isPending } = useMutation({
     mutationFn: async (feedbackData) => {
       const res = await axiosSecure.post("/feedback", feedbackData);
       return res.data;
@@ -29,7 +29,6 @@ const TerModal = ({ isOpen, close ,classData}) => {
     },
   });
 
-
   const handleSubmit = () => {
     const feedbackData = {
       studentName: user?.displayName,
@@ -42,8 +41,8 @@ const TerModal = ({ isOpen, close ,classData}) => {
       date: new Date().toISOString(),
     };
 
-    handleFeedback(feedbackData)
-    close(); 
+    handleFeedback(feedbackData);
+    close();
     setDescription("");
     setRating(0);
   };
@@ -102,7 +101,11 @@ const TerModal = ({ isOpen, close ,classData}) => {
                 onClick={handleSubmit}
                 className="w-full bg-gradient-to-r from-indigo-500 to-blue-500 hover:from-indigo-600 hover:to-blue-600 text-white font-semibold py-2 rounded shadow-md transition duration-200"
               >
-                {isPending ? <span className="loading loading-spinner loading-md"></span> : "Send Feedback"}
+                {isPending ? (
+                  <span className="loading loading-spinner loading-md"></span>
+                ) : (
+                  "Send Feedback"
+                )}
               </button>
             </div>
           </DialogPanel>

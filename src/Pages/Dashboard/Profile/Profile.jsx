@@ -41,7 +41,7 @@ const Profile = () => {
   }
   return (
     <div className="min-h-screen flex justify-center items-center">
-      <div className="max-w-sm mx-auto bg-white shadow-md rounded-xl p-6 space-y-4 border border-gray-200">
+      <div className="max-w-sm mx-auto bg-[var(--background)] rounded-xl p-6 space-y-4 text-[var(--text)]">
         {/* Profile Image */}
         <div className="flex justify-center">
           <img
@@ -53,14 +53,14 @@ const Profile = () => {
 
         {/* User Info */}
         <div className="text-center space-y-1">
-          <h2 className="text-xl font-semibold text-gray-800">
+          <h2 className="text-xl font-semibold">
             {userData?.name}
           </h2>
-          <p className="text-sm text-gray-500">{userData?.email}</p>
-          <p className="text-sm text-gray-500">
+          <p className="text-sm ">{userData?.email}</p>
+          <p className="text-sm">
             <strong>Role:</strong> {teacher.status === 'accepted' ? 'teacher' : userData?.role || "user"}
           </p>
-          <p className="text-sm text-gray-500">
+          <p className="text-sm">
             <strong>Phone:</strong> {userData?.phone || "N/A"}
           </p>
         </div>

@@ -128,7 +128,7 @@ const TeachOnSN = () => {
               defaultValue={user?.email}
               readOnly
               {...register("email")}
-              className="w-full input input-bordered bg-gray-100 cursor-not-allowed"
+              className="w-full input input-bordered cursor-not-allowed"
             />
           </div>
 

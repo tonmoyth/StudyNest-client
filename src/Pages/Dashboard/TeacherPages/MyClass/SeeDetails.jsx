@@ -6,6 +6,8 @@ import useAxiosSecure from "../../../../Hooks/useAxiosSecure";
 import { Button, Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
 import useAuth from "../../../../Hooks/useAuth";
 import Swal from "sweetalert2";
+import ButtonOne from "../../../../Components/ButtonOne/ButtonOne";
+import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from "recharts";
 
 const SeeDetails = () => {
   const { id } = useParams();
@@ -21,26 +23,22 @@ const SeeDetails = () => {
       return res.data;
     },
   });
-  
 
+  const { data: assignments } = useQuery({
+    queryKey: ["assignments", user?.email],
+    queryFn: async () => {
+      const res = await axiosSecure.get(`/assignments/count/${id}`);
+      return res.data;
+    },
+  });
 
-    const { data: assignments } = useQuery({
-      queryKey: ["assignments", user?.email],
-      queryFn: async () => {
-        const res = await axiosSecure.get(`/assignments/count/${id}`);
-        return res.data;
-      },
-    });
-  
-
-    const { data: submissions } = useQuery({
-      queryKey: ["submissions", id],
-      queryFn: async () => {
-        const res = await axiosSecure.get(`/assignment-submission-count/${id}`);
-        return res.data;
-      },
-    });
-   
+  const { data: submissions } = useQuery({
+    queryKey: ["submissions", id],
+    queryFn: async () => {
+      const res = await axiosSecure.get(`/assignment-submission-count/${id}`);
+      return res.data;
+    },
+  });
 
   const queryClient = useQueryClient();
 
@@ -51,7 +49,7 @@ const SeeDetails = () => {
     },
     onSuccess: () => {
       Swal.fire("Success!", "Assignment added successfully!", "success");
-       queryClient.invalidateQueries({ queryKey: ["assignments", user?.email] });
+      queryClient.invalidateQueries({ queryKey: ["assignments", user?.email] });
       close();
     },
     onError: () => {
@@ -90,39 +88,83 @@ const SeeDetails = () => {
     setIsOpen(false);
   };
 
+  const progressData = [
+    {
+      name: "total Enrollments",
+      value: enrollmentCount?.enrollments || 0,
+    },
+    {
+      name: "total Assignments",
+      value: assignments?.length || 0,
+    },
+    {
+      name: "total Submission",
+      value: submissions?.submissionCount || 0,
+    },
+  ];
+ const COLORS = ["#5e4cc8", "#9080ea", "#573bf7"];
   return (
-    <div className=" w-11/12 mx-auto px-4 py-8 grid grid-cols-1">
+    <div className=" py-8 grid grid-cols-1">
       {/* ✅ Class Progress Section */}
-      <div className="bg-white p-6 rounded shadow">
+      <div className=" p-6 rounded ">
         <div className="flex justify-between mb-4">
-          <h2 className="text-xl font-bold mb-4">📊 Class Progress</h2>
-          <Button
-            onClick={open}
-            className="rounded-md bg-black/20 px-4 py-2 text-sm font-medium text-white focus:not-data-focus:outline-none data-focus:outline data-focus:outline-white data-hover:bg-black/30"
-          >
-            Created
-          </Button>
+          <h2 className="text-xl font-bold mb-4"> Class Progress</h2>
+          <ButtonOne onClick={open} level="Created"></ButtonOne>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div className="bg-violet-100 p-4 rounded shadow text-center">
-            <h3 className="text-lg font-semibold">Total Enrollments</h3>
-            <p className="text-2xl font-bold text-violet-700">
+          <div className="bg-primary p-4 rounded shadow text-center">
+            <h3 className="text-lg text-white font-semibold">
+              Total Enrollments
+            </h3>
+            <p className="text-2xl font-bold text-white">
               {enrollmentCount?.enrollments || 0}
             </p>
           </div>
-          <div className="bg-green-100 p-4 rounded shadow text-center">
-            <h3 className="text-lg font-semibold">Total Assignments</h3>
-            <p className="text-2xl font-bold text-green-700">
-               {assignments?.length || 0}
+          <div className="bg-[var(--secondary)] p-4 rounded shadow text-center">
+            <h3 className="text-lg text-white font-semibold">
+              Total Assignments
+            </h3>
+            <p className="text-2xl font-bold text-white">
+              {assignments?.length || 0}
             </p>
           </div>
-          <div className="bg-orange-100 p-4 rounded shadow text-center">
-            <h3 className="text-lg font-semibold">Total Submissions</h3>
-            <p className="text-2xl font-bold text-orange-700">
+          <div className="bg-primary p-4 rounded shadow text-center">
+            <h3 className="text-lg text-white font-semibold">
+              Total Submissions
+            </h3>
+            <p className="text-2xl font-bold text-white">
               {submissions?.submissionCount || 0}
             </p>
           </div>
         </div>
+      </div>
+
+      {/* Chart */}
+      <div className="col-span-1 md:col-span-2 lg:col-span-4  rounded-xl  p-4">
+        <ResponsiveContainer width="100%" height={250}>
+          <PieChart>
+            <Pie
+              data={progressData}
+              cx="50%"
+              cy="50%"
+              labelLine={false}
+              outerRadius={100}
+              fill="#8884d8"
+              dataKey="value"
+              label={({ name, percent }) =>
+                `${name}: ${(percent * 100).toFixed(0)}%`
+              }
+            >
+              {progressData.map((entry, index) => (
+                <Cell
+                  key={`cell-${index}`}
+                  fill={COLORS[index % COLORS.length]}
+                />
+              ))}
+            </Pie>
+            <Tooltip />
+          </PieChart>
+        </ResponsiveContainer>
       </div>
       {/* assignment created modal */}
       <Dialog
@@ -194,9 +236,12 @@ const SeeDetails = () => {
                 </div>
 
                 {/* Submit Button */}
-                <button type="submit" className="btn btn-primary w-full">
-                  {isPending ? <span className="loading loading-spinner loading-md"></span> : 'Add Assignment'}
-                </button>
+                <div className="flex justify-center">
+                  <ButtonOne
+                    loading={isPending}
+                    level="Add Assignment"
+                  ></ButtonOne>
+                </div>
               </form>
             </DialogPanel>
           </div>

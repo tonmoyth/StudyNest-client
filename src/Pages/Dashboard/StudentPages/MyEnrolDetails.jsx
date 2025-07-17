@@ -6,6 +6,8 @@ import useAuth from "../../../Hooks/useAuth";
 import Swal from "sweetalert2";
 import TerModal from "./TerModal";
 import { Button } from "@headlessui/react";
+import Loading from "../../../Components/Loading/Loading";
+import ButtonOne from "../../../Components/ButtonOne/ButtonOne";
 
 const MyEnrolDetails = () => {
   const { id } = useParams();
@@ -17,7 +19,6 @@ const MyEnrolDetails = () => {
   const {
     data: assignments = [],
     isLoading,
-    isError,
     refetch,
   } = useQuery({
     queryKey: ["assignment", id],
@@ -30,7 +31,7 @@ const MyEnrolDetails = () => {
     },
   });
 
-  const { data: classData ={} } = useQuery({
+  const { data: classData = {} } = useQuery({
     queryKey: ["classes"],
     queryFn: async () => {
       const res = await axiosSecure.get(`/classes/${id}`);
@@ -84,21 +85,22 @@ const MyEnrolDetails = () => {
   const close = () => {
     setIsOpen(false);
   };
+  if (isLoading) {
+    return <Loading></Loading>;
+  }
 
   return (
     <div className="overflow-x-auto">
-      <div className="flex justify-end p-4">
-        <Button
+      <div className="flex justify-end mt-4 mr-4">
+        <ButtonOne
           onClick={open}
-          className="rounded-md bg-black/20 px-4 py-2 text-sm font-medium text-white focus:not-data-focus:outline-none data-focus:outline data-focus:outline-white data-hover:bg-black/30"
-        >
-          Teaching Evaluation Report (TER)
-        </Button>
+          level="Teaching Evaluation Report"
+        ></ButtonOne>
       </div>
-      <table className="table w-full mt-6">
+      <table className="table w-full mt-4">
         <thead>
-          <tr>
-            <th>#</th>
+          <tr className="bg-[var(--background)]">
+            <th>NO</th>
             <th>Title</th>
             <th>Description</th>
             <th>Deadline</th>
@@ -107,7 +109,11 @@ const MyEnrolDetails = () => {
         </thead>
         <tbody>
           {assignments.length === 0 ? (
-            <p className="text-center mt-4">No assignments</p>
+            <tr>
+              <td colSpan="5" className="text-center py-4 ">
+                No Assignments
+              </td>
+            </tr>
           ) : (
             <>
               {assignments.map((assignment, index) => (
