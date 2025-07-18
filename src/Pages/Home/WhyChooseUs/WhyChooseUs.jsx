@@ -31,8 +31,8 @@ const features = [
 
 const WhyChooseUs = () => {
   return (
-    <section className="py-16 px-4 md:px-10 lg:px-20 bg-[var(--background)] text-[var(--text)] transition-colors duration-300">
-      <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+    <section className="py-16  bg-[var(--background)] text-[var(--text)] transition-colors duration-300">
+      <div className="px-4 grid md:grid-cols-2 gap-12 items-center">
         {/* Left Content */}
         <div>
           <h2 className="text-4xl font-bold mb-4 text-[var(--text)]">

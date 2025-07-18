@@ -5,6 +5,7 @@ import Loading from "../../Components/Loading/Loading";
 import { Link } from "react-router";
 import ButtonOne from "../../Components/ButtonOne/ButtonOne";
 import Pagination from "../../Components/pagination/Pagination";
+import { Helmet } from "react-helmet-async";
 
 const Classes = () => {
   const axiosSecure = useAxiosSecure();
@@ -26,12 +27,16 @@ const Classes = () => {
   if (isError)
     return <p className="text-center text-red-500">Something went wrong!</p>;
   return (
-    <div className="w-11/12 mx-auto">
+    <div className="px-4">
+      <Helmet>
+        <title>Classes</title>
+   
+      </Helmet>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 py-10">
         {classes?.data?.map((classItem) => (
           <div
             key={classItem._id}
-            className="bg-[var(--background)] flex flex-col justify-between rounded-lg shadow-md p-3 space-y-2"
+            className="bg-[var(--background)] flex flex-col justify-between rounded-lg shadow-md p-4 space-y-2"
           >
             <img
               src={classItem.image}

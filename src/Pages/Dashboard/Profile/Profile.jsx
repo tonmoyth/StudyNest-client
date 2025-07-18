@@ -3,6 +3,7 @@ import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 import Loading from "../../../Components/Loading/Loading";
 import useAuth from "../../../Hooks/useAuth";
+import { Helmet } from "react-helmet-async";
 
 const Profile = () => {
   const axiosSecure = useAxiosSecure();
@@ -41,6 +42,9 @@ const Profile = () => {
   }
   return (
     <div className="min-h-screen flex justify-center items-center">
+      <Helmet>
+        <title>Profile</title>
+      </Helmet>
       <div className="max-w-sm mx-auto bg-[var(--background)] rounded-xl p-6 space-y-4 text-[var(--text)]">
         {/* Profile Image */}
         <div className="flex justify-center">

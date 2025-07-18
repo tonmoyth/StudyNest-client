@@ -1,11 +1,20 @@
-import React from 'react';
+import React from "react";
+import { Bars } from "react-loader-spinner";
 
 const Loading = () => {
-    return (
-        <div className="min-h-screen flex items-center justify-center bg-white">
-      <div className="w-12 h-12 border-4 border-violet-600 border-dashed rounded-full animate-spin"></div>
+  return (
+    <div className="h-screen flex justify-center items-center">
+      <Bars
+        height="70"
+        width="70"
+        color="#5e4cc8"
+        ariaLabel="bars-loading"
+        wrapperStyle={{}}
+        wrapperClass=""
+        visible={true}
+      />
     </div>
-    );
+  );
 };
 
 export default Loading;

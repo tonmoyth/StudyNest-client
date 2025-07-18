@@ -5,6 +5,7 @@ import Loading from "../../../../Components/Loading/Loading";
 import Swal from "sweetalert2";
 import ButtonOne from "../../../../Components/ButtonOne/ButtonOne";
 import Pagination from "../../../../Components/pagination/Pagination";
+import { Helmet } from "react-helmet-async";
 
 const Users = () => {
   const axiosSecure = useAxiosSecure();
@@ -26,7 +27,6 @@ const Users = () => {
     data: users = [],
     isLoading: isUsersLoading,
     refetch,
-    isError,
   } = useQuery({
     queryKey: ["all-users", currentPage],
     queryFn: async () => {
@@ -76,6 +76,9 @@ const Users = () => {
 
   return (
     <div className="p-6">
+      <Helmet>
+        <title>Users</title>
+      </Helmet>
       <div className="flex justify-end mb-4">
         <label className="input">
           <svg

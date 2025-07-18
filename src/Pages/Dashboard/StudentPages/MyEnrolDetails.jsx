@@ -8,6 +8,7 @@ import TerModal from "./TerModal";
 import { Button } from "@headlessui/react";
 import Loading from "../../../Components/Loading/Loading";
 import ButtonOne from "../../../Components/ButtonOne/ButtonOne";
+import { Helmet } from "react-helmet-async";
 
 const MyEnrolDetails = () => {
   const { id } = useParams();
@@ -91,6 +92,9 @@ const MyEnrolDetails = () => {
 
   return (
     <div className="overflow-x-auto">
+      <Helmet>
+        <title>Enroll details</title>
+      </Helmet>
       <div className="flex justify-end mt-4 mr-4">
         <ButtonOne
           onClick={open}

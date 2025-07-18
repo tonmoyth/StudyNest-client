@@ -3,7 +3,7 @@ import React from "react";
 const Pagination = ({setCurrentPage,currentPage,data}) => {
     
   return (
-    <div className="flex justify-center items-center gap-2 mt-4">
+    <div className="flex justify-center items-center gap-2 my-4">
       <button
         onClick={() => setCurrentPage((prev) => (prev - 1))}
         className="btn btn-sm"

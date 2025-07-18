@@ -15,8 +15,8 @@ const BestTeachers = () => {
   });
 
   return (
-    <section className="py-10 lg:py-12">
-      <div className="w-11/12 mx-auto text-[var(--text)]">
+    <section className="py-14 lg:py-18">
+      <div className=" px-4 text-[var(--text)]">
         <div className="border-l-4 border-primary pl-4">
           <h2 className="text-2xl lg:text-4xl font-bold mb-2">Best Teachers</h2>
           <p className="mb-8">

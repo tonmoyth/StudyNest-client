@@ -8,6 +8,8 @@ import ClassUpdateModal from "./ClassUpdateModal";
 import Swal from "sweetalert2";
 import Pagination from "../../../../Components/pagination/Pagination";
 import ButtonOne from "../../../../Components/ButtonOne/ButtonOne";
+import Loading from "../../../../Components/Loading/Loading";
+import { Helmet } from "react-helmet-async";
 
 const MyClass = () => {
   const { user } = useAuth();
@@ -76,7 +78,7 @@ const MyClass = () => {
     navigate(`/dashboard/my-class/${id}`);
   };
 
-  if (isLoading) return <p className="text-center">Loading...</p>;
+  if (isLoading) return <Loading></Loading>;
 
   if (myClasses.length === 0)
     return (
@@ -86,6 +88,9 @@ const MyClass = () => {
     );
   return (
     <div>
+      <Helmet>
+        <title>My Class</title>
+      </Helmet>
       <div className="min-h-screen">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-4 ">
           {myClasses?.classes?.map((classItem) => (

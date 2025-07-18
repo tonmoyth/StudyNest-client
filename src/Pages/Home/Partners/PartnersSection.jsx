@@ -11,7 +11,7 @@ const PartnersSection = () => {
   }, []);
 
   return (
-    <section className="py-10 lg:py-12 ">
+    <section className="pt-10 lg:pt-12 ">
       <div className=" text-center">
         <h2 className="text-2xl lg:text-4xl font-bold mb-2">Our Partners</h2>
         <p className=" mb-4 max-w-2xl mx-auto">

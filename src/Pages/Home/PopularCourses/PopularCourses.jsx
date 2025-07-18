@@ -27,8 +27,8 @@ const PopularCourses = () => {
 
  
   return (
-    <section className="py-10 lg:py-12">
-      <div className="container mx-auto px-4 text-center">
+    <section className="pt-14 lg:pt-18">
+      <div className="px-4 text-center">
         <h2 className="text-2xl lg:text-4xl font-bold mb-2"> Popular Courses</h2>
         <p className="mb-8 max-w-2xl mx-auto">
           These courses are trending right now based on highest enrollment.
@@ -42,6 +42,7 @@ const PopularCourses = () => {
             640: { slidesPerView: 1 },
             768: { slidesPerView: 2 },
             1024: { slidesPerView: 3 },
+            1343: { slidesPerView: 4 },
           }}
           navigation
           pagination={{ clickable: true }}
@@ -50,7 +51,7 @@ const PopularCourses = () => {
         >
           {topClasses.map((course) => (
             <SwiperSlide key={course.id}>
-              <div className="bg-[var(--background)] rounded-xl flex flex-col justify-between p-6 shadow hover:shadow-md transition text-left h-[380px]">
+              <div className="bg-[var(--background)] rounded-xl flex flex-col justify-between p-6 shadow hover:shadow-md transition text-left h-[390px]">
                 <img
                   src={course.image}
                   alt={course.title}

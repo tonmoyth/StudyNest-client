@@ -9,7 +9,7 @@ import { Switch } from "@headlessui/react";
 const NavBer = () => {
   const { user, logOut } = useAuth();
   const [theme, setTheme] = useState(
-    () => localStorage.getItem("theme") || "light"
+    () => localStorage.getItem("theme") || "dark"
   );
 
   useEffect(() => {

@@ -13,7 +13,7 @@ const WebsiteStatsSection = () => {
   });
 
   // get total users
-  const { data: totalUser = [], isLoading } = useQuery({
+  const { data: totalUser = [] } = useQuery({
     queryKey: ["totalUser"],
     queryFn: async () => {
       const res = await axiosSecure.get("/total-users");
@@ -42,8 +42,8 @@ const WebsiteStatsSection = () => {
 
 
   return (
-    <section className="py-10 lg:py-12 w-11/12 mx-auto">
-      <div className="flex flex-col md:flex-row items-center gap-6">
+    <section className="py-14 lg:py-18">
+      <div className="flex flex-col px-4 md:flex-row items-center gap-6">
         {/* Left Side - Stats */}
         <div className="w-full md:w-1/2 grid gap-6">
           <h2 className="text-2xl lg:text-4xl font-bold mb-4 text-center md:text-left">

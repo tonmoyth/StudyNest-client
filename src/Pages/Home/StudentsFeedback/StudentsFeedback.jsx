@@ -9,21 +9,18 @@ import StarRatings from "react-star-ratings";
 
 const StudentsFeedback = () => {
   const axiosSecure = useAxiosSecure();
-  const { data: feedbacks = [], isLoading } = useQuery({
+  const { data: feedbacks = [] } = useQuery({
     queryKey: ["feedbacks"],
     queryFn: async () => {
       const res = await axiosSecure.get("/feedbacks");
       return res.data;
     },
   });
-  if (isLoading) {
-    return <Loading></Loading>;
-  }
-  console.log(feedbacks);
+ 
 
   return (
-    <section className="py-16">
-      <div className="container mx-auto px-4 text-center">
+    <section className="py-14 lg:py-18 px-4">
+      <div className=" text-center">
         <h2 className="text-2xl lg:text-4xl font-bold mb-2"> Students Feedback</h2>
         <p className="mb-8 max-w-xl mx-auto">
           See what our learners have to say about their classes and instructors.
@@ -31,19 +28,20 @@ const StudentsFeedback = () => {
 
         <Swiper
           modules={[Pagination, Autoplay]}
-          spaceBetween={30}
+          spaceBetween={20}
           slidesPerView={1}
           breakpoints={{
             640: { slidesPerView: 1 },
             768: { slidesPerView: 2 },
             1024: { slidesPerView: 3 },
+            1343: { slidesPerView: 4 },
           }}
           autoplay={{ delay: 5000 }}
           pagination={{ clickable: true }}
         >
           {feedbacks.map((item, idx) => (
             <SwiperSlide key={idx}>
-              <div className="text-start bg-[var(--background)] space-y-4 shadow-lg flex flex-col justify-between rounded-xl p-6 h-[330px]">
+              <div className="text-start bg-[var(--background)] space-y-4 shadow-lg flex flex-col justify-between rounded-xl p-6 h-[365px]">
                 <p className="text-2xl font-semibold">{item.title}</p>
                 <StarRatings
                   rating={item.rating}

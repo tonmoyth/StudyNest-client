@@ -10,6 +10,7 @@ import { useQuery } from "@tanstack/react-query";
 import Loading from "../../../Components/Loading/Loading";
 import useAuth from "../../../Hooks/useAuth";
 import useUserRole from "../../../Hooks/useUserRole";
+import { Helmet } from "react-helmet-async";
 
 const Dashboard = () => {
   const axiosSecure = useAxiosSecure();
@@ -136,6 +137,9 @@ const Dashboard = () => {
   const COLORS = ["#5e4cc8", "#9080ea", "#573bf7"];
   return (
     <div className="p-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+      <Helmet>
+        <title>Dashboard</title>
+      </Helmet>
       <div className="bg-[var(--primary)] text-white p-6 rounded-xl shadow-md flex items-center gap-4">
         <FaClipboardList className="text-3xl" />
         <div>

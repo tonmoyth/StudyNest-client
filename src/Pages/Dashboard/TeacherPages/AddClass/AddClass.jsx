@@ -7,6 +7,7 @@ import { useMutation } from "@tanstack/react-query";
 import useAxiosSecure from "../../../../Hooks/useAxiosSecure";
 import { useNavigate } from "react-router";
 import ButtonOne from "../../../../Components/ButtonOne/ButtonOne";
+import { Helmet } from "react-helmet-async";
 
 const AddClass = () => {
   const { user } = useAuth();
@@ -91,6 +92,9 @@ const AddClass = () => {
 
   return (
     <div className="lg:w-11/12 mx-auto p-6 shadow rounded">
+      <Helmet>
+        <title>Add Class</title>
+      </Helmet>
       <h2 className="text-2xl font-bold mb-6 text-center">Add a Class</h2>
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-2">
         {/* Title */}
@@ -113,7 +117,7 @@ const AddClass = () => {
             type="text"
             value={user?.displayName}
             readOnly
-            className="input input-bordered w-full bg-gray-100"
+            className="input input-bordered w-full "
           />
         </div>
 
@@ -124,7 +128,7 @@ const AddClass = () => {
             type="email"
             value={user?.email}
             readOnly
-            className="input input-bordered w-full bg-gray-100"
+            className="input input-bordered w-full "
           />
         </div>
 

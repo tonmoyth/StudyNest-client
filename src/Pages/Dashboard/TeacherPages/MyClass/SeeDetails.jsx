@@ -8,6 +8,7 @@ import useAuth from "../../../../Hooks/useAuth";
 import Swal from "sweetalert2";
 import ButtonOne from "../../../../Components/ButtonOne/ButtonOne";
 import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from "recharts";
+import { Helmet } from "react-helmet-async";
 
 const SeeDetails = () => {
   const { id } = useParams();
@@ -105,6 +106,9 @@ const SeeDetails = () => {
  const COLORS = ["#5e4cc8", "#9080ea", "#573bf7"];
   return (
     <div className=" py-8 grid grid-cols-1">
+      <Helmet>
+        <title>See Details</title>
+      </Helmet>
       {/* ✅ Class Progress Section */}
       <div className=" p-6 rounded ">
         <div className="flex justify-between mb-4">

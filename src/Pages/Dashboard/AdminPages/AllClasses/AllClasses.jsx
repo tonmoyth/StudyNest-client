@@ -5,6 +5,7 @@ import Swal from "sweetalert2";
 import { useNavigate } from "react-router";
 import Pagination from "../../../../Components/pagination/Pagination";
 import Loading from "../../../../Components/Loading/Loading";
+import { Helmet } from "react-helmet-async";
 
 const AllClasses = () => {
   const axiosSecure = useAxiosSecure();
@@ -88,6 +89,9 @@ const AllClasses = () => {
 
   return (
     <div>
+      <Helmet>
+        <title>All Classes</title>
+      </Helmet>
       <div className="overflow-x-auto min-h-screen">
         <table className="table w-full">
           <thead>

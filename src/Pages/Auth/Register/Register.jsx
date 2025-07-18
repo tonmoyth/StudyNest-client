@@ -6,9 +6,11 @@ import Swal from "sweetalert2";
 import GoogleLogin from "../../../shared/SocialLogin/GoogleLogin";
 import { useMutation } from "@tanstack/react-query";
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
+import ButtonOne from "../../../Components/ButtonOne/ButtonOne";
+import { Helmet } from "react-helmet-async";
 
 const Register = () => {
-  const {user, createUser,loading: userLoading, updateUserProfile } = useAuth();
+  const { createUser, updateUserProfile } = useAuth();
   const navigate = useNavigate();
   const axiosSecure = useAxiosSecure();
   const [loading, setLoading] = useState(false);
@@ -90,13 +92,16 @@ const Register = () => {
       });
   };
   return (
-    <div className="min-h-screen flex justify-center items-center py-10">
-      <div className="w-full max-w-md p-8 space-y-3 rounded-xl dark:bg-gray-50 dark:text-gray-800">
+    <div className="min-h-screen px-4 flex justify-center items-center py-10">
+      <Helmet>
+        <title>Register</title>
+      </Helmet>
+      <div className="w-full max-w-md p-8 space-y-3 rounded-xl bg-[var(--background)]">
         <h1 className="text-2xl font-bold text-center">Registration</h1>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
           {/* Username */}
           <div className="space-y-1 text-sm">
-            <label htmlFor="username" className="block dark:text-gray-600">
+            <label htmlFor="username" className="block ">
               Username
             </label>
             <input
@@ -113,7 +118,7 @@ const Register = () => {
 
           {/* Photo URL */}
           <div className="space-y-1 text-sm">
-            <label htmlFor="photo" className="block dark:text-gray-600">
+            <label htmlFor="photo" className="block ">
               Photo URL
             </label>
             <input
@@ -130,7 +135,7 @@ const Register = () => {
 
           {/* Email */}
           <div className="space-y-1 text-sm">
-            <label htmlFor="email" className="block dark:text-gray-600">
+            <label htmlFor="email" className="block ">
               Email
             </label>
             <input
@@ -153,7 +158,7 @@ const Register = () => {
 
           {/* Password */}
           <div className="space-y-1 text-sm">
-            <label htmlFor="password" className="block dark:text-gray-600">
+            <label htmlFor="password" className="block ">
               Password
             </label>
             <input
@@ -174,30 +179,28 @@ const Register = () => {
             )}
           </div>
 
-          <button className="block w-full p-3 text-center rounded-sm dark:text-gray-50 dark:bg-violet-600">
-            {loading ? (
-              <span className="loading loading-spinner loading-md"></span>
-            ) : (
-              "Register"
-            )}
-          </button>
+          <div className="flex justify-center">
+            <ButtonOne loading={loading} level="Register"></ButtonOne>
+          </div>
+
+          
         </form>
 
         <div className="flex items-center pt-4 space-x-1">
-          <div className="flex-1 h-px sm:w-16 dark:bg-gray-300"></div>
-          <p className="px-3 text-sm dark:text-gray-600">
+          <div className="flex-1 h-px sm:w-16 "></div>
+          <p className="px-3 text-sm ">
             Login with social accounts
           </p>
-          <div className="flex-1 h-px sm:w-16 dark:bg-gray-300"></div>
+          <div className="flex-1 h-px sm:w-16 "></div>
         </div>
 
         <div className="flex justify-center space-x-4">
           <GoogleLogin></GoogleLogin>
         </div>
 
-        <p className="text-xs text-center sm:px-6 dark:text-gray-600">
+        <p className="text-xs text-center sm:px-6 ">
           Already have an account?
-          <Link to="/login" className="underline dark:text-gray-800 ml-1">
+          <Link to="/login" className="underline text-primary ml-1">
             Login
           </Link>
         </p>
