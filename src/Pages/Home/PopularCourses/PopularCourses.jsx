@@ -13,7 +13,6 @@ const PopularCourses = () => {
   const axiosSecure = useAxiosSecure();
   const {
     data: topClasses = [],
-    isLoading,
   } = useQuery({
     queryKey: ["top-enrolled-classes"],
     queryFn: async () => {
@@ -21,16 +20,13 @@ const PopularCourses = () => {
       return res.data;
     },
   });
-  if(isLoading){
-    return <Loading></Loading>
-  }
 
  
   return (
     <section className="pt-14 lg:pt-18">
       <div className="px-4 text-center">
-        <h2 className="text-2xl lg:text-4xl font-bold mb-2"> Popular Courses</h2>
-        <p className="mb-8 max-w-2xl mx-auto">
+        <h2 data-aos="fade-up" className="text-2xl lg:text-4xl font-bold mb-2"> Popular Courses</h2>
+        <p data-aos="fade-up" className="mb-8 max-w-2xl mx-auto">
           These courses are trending right now based on highest enrollment.
         </p>
 
@@ -51,7 +47,7 @@ const PopularCourses = () => {
         >
           {topClasses.map((course) => (
             <SwiperSlide key={course.id}>
-              <div className="bg-[var(--background)] rounded-xl flex flex-col justify-between p-6 shadow hover:shadow-md transition text-left h-[390px]">
+              <div data-aos="fade-up" className="bg-[var(--background)] rounded-xl flex flex-col justify-between p-6 shadow hover:shadow-md transition text-left h-[390px]">
                 <img
                   src={course.image}
                   alt={course.title}

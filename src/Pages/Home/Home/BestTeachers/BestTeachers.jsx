@@ -16,8 +16,8 @@ const BestTeachers = () => {
 
   return (
     <section className="py-14 lg:py-18">
-      <div className=" px-4 text-[var(--text)]">
-        <div className="border-l-4 border-primary pl-4">
+      <div className=" px-4 text-[var(--text)] overflow-hidden">
+        <div data-aos="fade-right" className="border-l-4 border-primary pl-4">
           <h2 className="text-2xl lg:text-4xl font-bold mb-2">Best Teachers</h2>
           <p className="mb-8">
             Learn from industry-leading instructors with years of experience and
@@ -28,6 +28,7 @@ const BestTeachers = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6">
           {topTeachers.map((teacher) => (
             <div
+            data-aos="fade-up"
               key={teacher.email}
               className="relative group bg-[var(--background)] hover:bg-[var(--secondary)] rounded-xl p-6 text-center hover:shadow-lg transition duration-300 overflow-hidden"
             >

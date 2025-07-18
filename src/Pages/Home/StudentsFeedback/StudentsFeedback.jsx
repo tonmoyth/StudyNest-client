@@ -21,8 +21,8 @@ const StudentsFeedback = () => {
   return (
     <section className="py-14 lg:py-18 px-4">
       <div className=" text-center">
-        <h2 className="text-2xl lg:text-4xl font-bold mb-2"> Students Feedback</h2>
-        <p className="mb-8 max-w-xl mx-auto">
+        <h2 data-aos="fade-up" className="text-2xl lg:text-4xl font-bold mb-2"> Students Feedback</h2>
+        <p data-aos="fade-up" className="mb-8 max-w-xl mx-auto">
           See what our learners have to say about their classes and instructors.
         </p>
 
@@ -41,7 +41,7 @@ const StudentsFeedback = () => {
         >
           {feedbacks.map((item, idx) => (
             <SwiperSlide key={idx}>
-              <div className="text-start bg-[var(--background)] space-y-4 shadow-lg flex flex-col justify-between rounded-xl p-6 h-[365px]">
+              <div data-aos="fade-up" className="text-start bg-[var(--background)] space-y-4 shadow-lg flex flex-col justify-between rounded-xl p-6 h-[365px]">
                 <p className="text-2xl font-semibold">{item.title}</p>
                 <StarRatings
                   rating={item.rating}

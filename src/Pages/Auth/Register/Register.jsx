@@ -42,8 +42,7 @@ const Register = () => {
       reset();
       navigate("/profileUpdate", { state });
     },
-    onError: (error) => {
-      console.log(error);
+    onError: () => {
       Swal.fire({
         icon: "error",
         title: "User save failed",
@@ -65,7 +64,7 @@ const Register = () => {
               name: username,
               email: email,
               photo: photo,
-              role: "user", // default
+              role: "student",
               createdAt: new Date().toISOString(),
               last_login: new Date().toISOString(),
             };
@@ -96,7 +95,7 @@ const Register = () => {
       <Helmet>
         <title>Register</title>
       </Helmet>
-      <div className="w-full max-w-md p-8 space-y-3 rounded-xl bg-[var(--background)]">
+      <div data-aos="fade-up" className="w-full max-w-md p-8 space-y-3 rounded-xl bg-[var(--background)]">
         <h1 className="text-2xl font-bold text-center">Registration</h1>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
           {/* Username */}

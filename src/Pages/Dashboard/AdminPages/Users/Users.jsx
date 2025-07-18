@@ -105,8 +105,8 @@ const Users = () => {
           />
         </label>
       </div>
-      <div className="overflow-x-auto">
-        <table className="table w-full">
+      <div className="overflow-x-auto min-h-screen">
+        <table className="table w-full ">
           <thead>
             <tr className="bg-[var(--background)]">
               <th>NO</th>
@@ -120,12 +120,15 @@ const Users = () => {
             {isSearchLoading ? (
               <tr>
                 <td colSpan="5" className="text-center py-4">
-                  <span className="loading loading-spinner loading-md"></span>
+                  <Loading></Loading>
                 </td>
               </tr>
             ) : displayedUsers.length === 0 ? (
               <tr>
-                <td colSpan="5" className="text-center text-gray-500 py-4">
+                <td
+                  colSpan="5"
+                  className="text-center min-h-screen text-gray-500 py-4"
+                >
                   No users found.
                 </td>
               </tr>
@@ -159,11 +162,15 @@ const Users = () => {
       </div>
 
       {/* pagination */}
-      <Pagination
-        data={users}
-        setCurrentPage={setCurrentPage}
-        currentPage={currentPage}
-      ></Pagination>
+      {displayedUsers.length === 0 ? (
+        ""
+      ) : (
+        <Pagination
+          data={users}
+          setCurrentPage={setCurrentPage}
+          currentPage={currentPage}
+        ></Pagination>
+      )}
     </div>
   );
 };

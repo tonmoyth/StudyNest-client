@@ -42,15 +42,15 @@ const WebsiteStatsSection = () => {
 
 
   return (
-    <section className="py-14 lg:py-18">
+    <section className="pb-14 lg:pb-18">
       <div className="flex flex-col px-4 md:flex-row items-center gap-6">
         {/* Left Side - Stats */}
         <div className="w-full md:w-1/2 grid gap-6">
-          <h2 className="text-2xl lg:text-4xl font-bold mb-4 text-center md:text-left">
+          <h2 data-aos="fade-up" className="text-2xl lg:text-4xl font-bold mb-4 text-center md:text-left">
             Platform Overview
           </h2>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div data-aos="fade-up" className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {/* Total Users */}
             <div className="card bg-[var(--background)] ">
               <div className="card-body">
@@ -70,7 +70,7 @@ const WebsiteStatsSection = () => {
             </div>
 
             {/* Total Classes */}
-            <div className="card bg-[var(--background)] ">
+            <div data-aos="fade-up" className="card bg-[var(--background)] ">
               <div className="card-body">
                 <h3 className="card-title text-xl font-semibold">
                   Total Classes
@@ -88,7 +88,7 @@ const WebsiteStatsSection = () => {
             </div>
 
             {/* Total Enrollments */}
-            <div className="card bg-[var(--background)] ">
+            <div data-aos="fade-up" className="card bg-[var(--background)] ">
               <div className="card-body">
                 <h3 className="card-title text-xl font-semibold">
                   Total Enrollments
@@ -108,7 +108,7 @@ const WebsiteStatsSection = () => {
         </div>
 
         {/* Right Side - Image */}
-        <div className="w-full md:w-1/2 flex justify-center">
+        <div data-aos="fade-up" className="w-full md:w-1/2 flex justify-center">
           <img
             src={educationStateImage} // Replace with your own image path
             alt="Education Stats Illustration"

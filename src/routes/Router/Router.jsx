@@ -21,12 +21,14 @@ import MyEnroll from "../../Pages/Dashboard/StudentPages/MyEnroll";
 import MyEnrolDetails from "../../Pages/Dashboard/StudentPages/MyEnrolDetails";
 import ForbiddenPage from "../../Pages/Forbidden/ForbiddenPage";
 import Dashboard from "../../Pages/Dashboard/DashbaordHome/Dashbaord";
+import NotFoundPage from "../../Pages/NotFoundPage/NotFoundPage";
 
 
 export const Router = createBrowserRouter([
   {
     path: "/",
     Component: MainLayout,
+    errorElement: <NotFoundPage></NotFoundPage>,
     children: [
         {
             index: true,

@@ -74,7 +74,7 @@ const Login = () => {
       <Helmet>
         <title>Login</title>
       </Helmet>
-      <div className="w-full max-w-md p-8 space-y-3 rounded-xl bg-[var(--background)]">
+      <div data-aos="fade-up" className="w-full max-w-md p-8 space-y-3 rounded-xl bg-[var(--background)]">
         <h1 className="text-2xl font-bold text-center">Login</h1>
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">

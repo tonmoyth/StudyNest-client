@@ -69,7 +69,6 @@ const SeeDetails = () => {
   } = useForm();
 
   const onSubmit = (data) => {
-    console.log(data);
     const assignmentInfo = {
       title: data?.title,
       description: data?.description,
@@ -177,17 +176,17 @@ const SeeDetails = () => {
         className="relative z-10 focus:outline-none"
         onClose={close}
       >
-        <div className="fixed inset-0 z-10 w-screen overflow-y-auto bg-black/30">
+        <div className="fixed inset-0 z-10 w-screen overflow-y-auto ">
           <div className="flex min-h-full items-center justify-center p-4">
-            <DialogPanel className="w-full max-w-md rounded-xl bg-white p-6 shadow-xl">
-              <DialogTitle className="text-lg font-bold text-gray-800 mb-4">
+            <DialogPanel className="w-full max-w-md rounded-xl bg-[var(--background)] p-6 shadow-xl">
+              <DialogTitle className="text-lg font-bold  mb-4">
                 Add Assignment
               </DialogTitle>
 
               <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
                 {/* Assignment Title */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700">
+                  <label className="block text-sm font-medium ">
                     Assignment Title
                   </label>
                   <input
@@ -204,7 +203,7 @@ const SeeDetails = () => {
 
                 {/* Deadline */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700">
+                  <label className="block text-sm font-medium ">
                     Deadline
                   </label>
                   <input
@@ -223,7 +222,7 @@ const SeeDetails = () => {
 
                 {/* Description */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700">
+                  <label className="block text-sm font-medium ">
                     Description
                   </label>
                   <textarea

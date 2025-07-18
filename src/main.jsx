@@ -7,6 +7,14 @@ import AuthProvider from "./Context/AuthProvider.jsx";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { HelmetProvider } from "react-helmet-async";
 
+import AOS from "aos";
+import "aos/dist/aos.css";
+// ..
+AOS.init({
+  once: true,
+  mirror: true,
+});
+
 // Create a client
 const queryClient = new QueryClient();
 

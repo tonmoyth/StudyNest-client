@@ -17,16 +17,16 @@ const HeroSection = () => {
       {/* Overlay */}
        <div className="absolute inset-0 bg-black/55 to-transparent flex items-center justify-center text-white">
         <div className="text-center max-w-2xl px-4">
-          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">
+          <h1 data-aos="zoom-in" className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">
             Learn, Teach, and Grow with Study Nest
           </h1>
-          <p className="text-lg md:text-xl mb-6">
+          <p data-aos="zoom-in" className="text-lg md:text-xl mb-6">
             Join our collaborative platform where students gain skills and teachers share their expertise.
           </p>
           <div className="flex justify-center gap-4 flex-wrap">
             {/* <ButtonThree level="Browse Classes"></ButtonThree> */}
           
-           <Link to='/classes'>
+           <Link data-aos="zoom-in" to='/classes'>
             <ButtonTwo level="Browse Classes"></ButtonTwo>
             </Link>
            

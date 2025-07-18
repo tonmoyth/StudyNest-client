@@ -57,11 +57,15 @@ const MyEnroll = () => {
         )}
 
         {/* pagination */}
-        <Pagination
-          data={enrolledClasses}
-          setCurrentPage={setCurrentPage}
-          currentPage={currentPage}
-        ></Pagination>
+        {enrolledClasses?.data?.length === 0 ? (
+          ""
+        ) : (
+          <Pagination
+            data={enrolledClasses}
+            setCurrentPage={setCurrentPage}
+            currentPage={currentPage}
+          ></Pagination>
+        )}
       </div>
     </div>
   );

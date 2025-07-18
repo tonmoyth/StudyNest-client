@@ -82,7 +82,7 @@ const TeachOnSN = () => {
     });
   }
   return (
-    <div>
+    <div className="min-h-screen">
       <Helmet>
         <title>Teach</title>
       </Helmet>

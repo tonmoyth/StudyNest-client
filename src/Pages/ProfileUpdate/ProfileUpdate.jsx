@@ -7,6 +7,7 @@ import useAuth from "../../Hooks/useAuth";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import Loading from "../../Components/Loading/Loading";
 import { Helmet } from "react-helmet-async";
+import ButtonOne from "../../Components/ButtonOne/ButtonOne";
 
 const ProfileUpdate = () => {
   const { state } = useLocation();
@@ -67,11 +68,11 @@ const ProfileUpdate = () => {
   }
 
   return (
-    <div>
+    <div className="min-h-screen">
       <Helmet>
         <title>Profile update</title>
       </Helmet>
-      <div className="max-w-xl mx-auto p-8 bg-white shadow rounded-xl mt-10">
+      <div className="max-w-xl mx-auto p-8 bg-[var(--background)] my-4 shadow rounded-xl mt-10">
         <h2 className="text-2xl font-bold text-center mb-6">
           Update Your Profile
         </h2>
@@ -84,7 +85,7 @@ const ProfileUpdate = () => {
               value={user?.displayName}
               readOnly
               {...register("name", { required: "Name is required" })}
-              className="w-full input bg-gray-100  input-bordered"
+              className="w-full input  input-bordered"
             />
             {errors.name && (
               <p className="text-red-500 text-sm">{errors.name.message}</p>
@@ -99,7 +100,7 @@ const ProfileUpdate = () => {
               value={user?.email}
               readOnly
               {...register("email")}
-              className="w-full input input-bordered bg-gray-100 cursor-not-allowed"
+              className="w-full input input-bordered cursor-not-allowed"
             />
           </div>
 
@@ -117,13 +118,10 @@ const ProfileUpdate = () => {
             )}
           </div>
           {/* Submit Button */}
-          <button type="submit" className="btn btn-primary w-full">
-            {isPending ? (
-              <span className="loading loading-spinner loading-md"></span>
-            ) : (
-              "Update Profile"
-            )}
-          </button>
+          <div className="flex justify-center">
+            <ButtonOne loading={isPending} level="Update Profile"></ButtonOne>
+          </div>
+        
         </form>
       </div>
     </div>

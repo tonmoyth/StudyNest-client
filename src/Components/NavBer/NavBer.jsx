@@ -13,7 +13,8 @@ const NavBer = () => {
   );
 
   useEffect(() => {
-    document.documentElement.setAttribute("data-theme", theme);
+    // document.documentElement.setAttribute("data-theme", theme);
+    document.querySelector('html').setAttribute("data-theme", theme);
     localStorage.setItem("theme", theme);
   }, [theme]);
 

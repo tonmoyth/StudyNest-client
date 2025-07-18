@@ -28,7 +28,6 @@ const GoogleLogin = () => {
     //   });
     },
     onError: (error) => {
-      console.log(error)
       Swal.fire({
         icon: "error",
         title: "User Save Failed",
@@ -46,7 +45,7 @@ const GoogleLogin = () => {
           name: loggedUser.displayName,
           email: loggedUser.email,
           photo: loggedUser.photoURL,
-          role: "user", // default role
+          role: "student", 
           createdAt: new Date().toISOString(),
           last_login: new Date().toISOString()
         }

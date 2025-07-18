@@ -20,9 +20,9 @@ const Home = () => {
       <PopularCourses></PopularCourses>
       <StudentsFeedback></StudentsFeedback>
       <BecomeTeacherSection></BecomeTeacherSection>
-      <BestTeachers></BestTeachers>
-      <WhyChooseUs></WhyChooseUs>
       <WebsiteStatsSection></WebsiteStatsSection>
+      <WhyChooseUs></WhyChooseUs>
+      <BestTeachers></BestTeachers>
     </div>
   );
 };
