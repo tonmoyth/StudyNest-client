@@ -26,7 +26,7 @@ const ClassDetails = () => {
   };
   if (isLoading) return <Loading></Loading>;
   return (
-    <div>
+    <div className="px-4">
       <Helmet>
         <title>Class Details</title>
       </Helmet>

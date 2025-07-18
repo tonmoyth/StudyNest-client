@@ -42,7 +42,7 @@ const WebsiteStatsSection = () => {
 
 
   return (
-    <section className="pb-14 lg:pb-18">
+    <section className="py-14 lg:py-18">
       <div className="flex flex-col px-4 md:flex-row items-center gap-6">
         {/* Left Side - Stats */}
         <div className="w-full md:w-1/2 grid gap-6">
