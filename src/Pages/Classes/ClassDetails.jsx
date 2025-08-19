@@ -26,7 +26,7 @@ const ClassDetails = () => {
   };
   if (isLoading) return <Loading></Loading>;
   return (
-    <div className="px-4">
+    <div className="px-4 min-h-[100vh]">
       <Helmet>
         <title>Class Details</title>
       </Helmet>

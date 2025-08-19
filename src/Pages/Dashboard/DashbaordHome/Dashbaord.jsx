@@ -4,7 +4,7 @@ import {
   FaChalkboardTeacher,
   FaClipboardList,
 } from "react-icons/fa";
-import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from "recharts";
+import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer, BarChart, CartesianGrid, XAxis, YAxis, Legend, Bar } from "recharts";
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 import Loading from "../../../Components/Loading/Loading";
@@ -103,10 +103,10 @@ const Dashboard = () => {
     },
   });
 
-  const pieData = [
+  const adminData = [
     { name: "Students", value: totalStudents.totalStudents || 0 },
     { name: "Teachers", value: totalTeachers.totalTeachers || 0 },
-    { name: "Users", value: totalUser.totalUser || 0 },
+    { name: "Users", value: totalUser.totalUsers || 0 },
     { name: "Classes", value: totalClasses.totalClasses || 0 },
   ];
 
@@ -213,38 +213,42 @@ const Dashboard = () => {
       )}
 
       {/* Chart */}
-      <div className="col-span-1 md:col-span-2 lg:col-span-4 bg-[var(--background)] dark:bg-[var(--background)] rounded-xl  p-4">
-        <ResponsiveContainer width="100%" height={250}>
-          <PieChart>
-            <Pie
-              data={
-                role === "admin"
-                  ? pieData
-                  : role === "teacher"
-                  ? teacherData
-                  : studentData 
-              }
-              cx="50%"
-              cy="50%"
-              labelLine={false}
-              outerRadius={100}
-              fill="#8884d8"
-              dataKey="value"
-              label={({ name, percent }) =>
-                `${name}: ${(percent * 100).toFixed(0)}%`
-              }
-            >
-              {pieData.map((entry, index) => (
-                <Cell
-                  key={`cell-${index}`}
-                  fill={COLORS[index % COLORS.length]}
-                />
-              ))}
-            </Pie>
-            <Tooltip />
-          </PieChart>
-        </ResponsiveContainer>
-      </div>
+      <div className="col-span-1 md:col-span-2 lg:col-span-4 bg-[var(--background)] dark:bg-[var(--background)] rounded-xl p-4">
+  <ResponsiveContainer width="100%" height={250}>
+    <BarChart
+      data={
+        role === "admin"
+          ? adminData
+          : role === "teacher"
+          ? teacherData
+          : studentData
+      }
+      margin={{
+        top: 20,
+        right: 30,
+        left: 0,
+        bottom: 5,
+      }}
+    >
+      <CartesianGrid strokeDasharray="3 3" />
+      <XAxis dataKey="name" />
+      <YAxis />
+      <Tooltip />
+      <Legend />
+       <Bar dataKey="value" radius={[8, 8, 0, 0]}>
+        {(
+          role === "admin"
+            ? adminData
+            : role === "teacher"
+            ? teacherData
+            : studentData
+        ).map((entry, index) => (
+          <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+        ))}
+      </Bar>
+    </BarChart>
+  </ResponsiveContainer>
+</div>
     </div>
   );
 };
