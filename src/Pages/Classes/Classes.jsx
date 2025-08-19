@@ -12,7 +12,6 @@ import { Select, Space } from "antd";
 const Classes = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [order, setOrder] = useState("Select");
-  console.log(order)
 
   const {
     data: classes = [],
@@ -23,7 +22,7 @@ const Classes = () => {
     enabled: !!currentPage,
     queryFn: async () => {
       const res = await axios.get(
-        `http://localhost:3000/classes/approved?page=${currentPage}&sort=${order}`
+        `https://study-nest-server-sepia.vercel.app/classes/approved?page=${currentPage}&sort=${order}`
       );
       return res.data;
     },
