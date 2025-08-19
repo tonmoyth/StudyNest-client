@@ -1,6 +1,6 @@
 # 🎓 StudyNest
 
-Skillify is an interactive e-learning platform where students can enroll in courses, and teachers can share their knowledge by adding their own classes. It includes role-based dashboards for **Admin**, **Teacher**, and **Student**, and a secure login/registration system.
+StudyNest is an interactive e-learning platform where students can enroll in courses, and teachers can share their knowledge by adding their own classes. It includes role-based dashboards for **Admin**, **Teacher**, and **Student**, and a secure login/registration system.
 
 🌐 **Live Website**: [https://study-next-3a546.web.app/]
 
