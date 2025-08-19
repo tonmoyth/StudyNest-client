@@ -214,7 +214,7 @@ const Dashboard = () => {
 
       {/* Chart */}
       <div className="col-span-1 md:col-span-2 lg:col-span-4 bg-[var(--background)] dark:bg-[var(--background)] rounded-xl p-4">
-  <ResponsiveContainer width="100%" height={250}>
+  <ResponsiveContainer width="100%" height={350}>
     <BarChart
       data={
         role === "admin"
