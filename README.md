@@ -5,7 +5,7 @@ StudyNest is an interactive e-learning platform where students can enroll in cou
 🌐 **Live Website**: [https://study-next-3a546.web.app/]
 
 🧑‍💼 **Admin Login Info:**
-- **Email:** tonmoyth1@gmail.com
+- **Email:** tonmoyth1@gmail.ocm
 - **Password:** 123456
 
 ---
